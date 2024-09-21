@@ -28,28 +28,25 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `usuarios` (
-  `id` int(11) NOT NULL,
-  `nombre` text NOT NULL
+  `dni` char(9) NOT NULL,
+  `nombre` text NOT NULL,
+  `telefono` text NOT NULL,
+  `fecha` text NOT NULL,
+  `email` text NOT NULL,
+  PRIMARY KEY(`dni`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `nombre`) VALUES
-(1, 'mikel'),
-(2, 'aitor');
+INSERT INTO `usuarios` (`dni`, `nombre`) VALUES
+  ('12345678A', 'mikel'),
+  ('12345678B', 'aitor');
 
 --
 -- Índices para tablas volcadas
 --
-
---
--- Indices de la tabla `usuarios`
---
-ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

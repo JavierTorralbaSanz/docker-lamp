@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h1>lol, lmao even</h1>
+
+        <script>
+            function validar() {
+                window.alert(document.register_form.nombre.value);
+                document.register_form.submit();
+            }
+        </script>
+
+        <form name="register_form" id="register_submit" action="registrar.php" method="POST">
+            <label for="name">Nombre y apellidos:</label><br>
+            <input type="text" id="nombre" name="nombre"><br>
+            <label for="name">DNI:</label><br>
+            <input type="text" id="dni" name="dni"><br>
+            <label for="name">Teléfono:</label><br>
+            <input type="text" id="telefono" name="telefono"><br>
+            <label for="name">Fecha de nacimiento:</label><br>
+            <input type="text" id="fecha" name="fecha"><br>
+            <label for="name">Email:</label><br>
+            <input type="text" id="email" name="email"><br>
+            <input type="button" value="Submit" id="register_submit" onclick="validar()">
+        </form>
+
+    </body>
+</html>
