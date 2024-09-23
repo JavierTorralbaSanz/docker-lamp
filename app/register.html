@@ -25,12 +25,13 @@
                 var respuesta=""
                 var valorIntroducido=document.getElementById("nombre").value;
                 var respuestasCorrectas=true;
+
                 //Comprobar si nombre y apellido solamente contienen texto
                 if (!/^[a-zA-Z\s]+$/.test(valorIntroducido))
                 {
                     respuesta+="Solo se puede introducir letras en el nombre!!!, Por favor ponga su nombre \n";
                     respuestasCorrectas=false;
-                    //console.log("Solamente de debe de introducir letras!!!");
+                    
                 }
 
                 valorIntroducido=document.getElementById("dni").value;
@@ -40,7 +41,7 @@
                 {
                     respuesta+="El DNI no es correcto \n";
                     respuestasCorrectas=false;
-                    //console.log("El DNI no es correcto");
+                    
                 }
 
                 //Comprobar digito de telefono solo 9 digitos.
@@ -49,16 +50,19 @@
                 {
                     respuesta+="El telefono debe de tener 9 digitos \n";
                     respuestasCorrectas=false;
-                    //console.log("El telefono no tiene 9 digitos");
+                    
                 }
                 
                 //Fecha de Nacimiento en formato de 1999-08-26
                 valorIntroducido=document.getElementById("fecha").value;
-                if(!( /^\d{4}-\d{2}-\d{2}$/.test(valorIntroducido)))
+                if(!( /^\d{4}-\d{2}-\d{2}$/.test(valorIntroducido) && !isNaN(Date.parse(valorIntroducido))))
                 {
-                    respuesta+="La fecha introducida debe de tenr este formato YYYY-MM-dd \n";
+                    // isNaN(Date.parse(valorIntroducido)) si es una fecha valida devuelve false
+                    window.alert(isNaN(Date.parse(valorIntroducido)));
+                    window.alert(Date.parse(valorIntroducido))
+                    respuesta+="La fecha introducida debe de tener este formato YYYY-MM-dd \n"; //https://es.stackoverflow.com/questions/302153/validar-fecha-que-introduce-el-usuario-en-javascript
                     respuestasCorrectas=false;
-                    //console.log("La fecha introducida es incorrecta");
+                    
                 }
                 
                 //Solo formatos de email validos ejemplo@servidor.extension
@@ -66,14 +70,16 @@
                 {
                     respuesta+="El gmail no es correcto \n";
                     respuestasCorrectas=false;
-                    //console.log("El gmail no es correcto")
+                    
                 }
+
+
                 if (respuestasCorrectas){
                     window.alert(document.register_form.nombre.value);
                     document.register_form.submit();
                 }
                 else{
-                    window.alert("Hay ocurrido un error en sus repuestas:\n"+respuesta);
+                    window.alert("Ha ocurrido algun error en alguna de sus repuestas:\n"+respuesta);
                 }
                 
             }

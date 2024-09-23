@@ -46,13 +46,13 @@ CREATE TABLE `videojuegos`(
  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE `tiene` (
-    `CodigoId` VARCHAR(50) NOT NULL,
-    `DNIUsuario` CHAR(9) NOT NULL,
-    PRIMARY KEY (`CodigoId`, `DNIUsuario`),
-    FOREIGN KEY (`CodigoId`) REFERENCES videojuegos(`CodigoId`),
-    FOREIGN KEY (`DNIUsuario`) REFERENCES usuarios(`DNI`)  -- Cambiar "usuario" por "usuarios"
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+--CREATE TABLE `tiene` (
+  --  `CodigoId` VARCHAR(50) NOT NULL,
+    --`DNIUsuario` CHAR(9) NOT NULL,
+    --PRIMARY KEY (`CodigoId`, `DNIUsuario`),
+    --FOREIGN KEY (`CodigoId`) REFERENCES videojuegos(`CodigoId`),
+    --FOREIGN KEY (`DNIUsuario`) REFERENCES usuarios(`DNI`)  -- Cambiar "usuario" por "usuarios"
+--) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `usuarios`
