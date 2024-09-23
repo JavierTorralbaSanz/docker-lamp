@@ -28,12 +28,30 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `usuarios` (
-  `dni` char(9) NOT NULL,
+  `DNI` char(9) NOT NULL,
   `nombre` text NOT NULL,
   `telefono` text NOT NULL,
   `fecha` text NOT NULL,
   `email` text NOT NULL,
-  PRIMARY KEY(`dni`)
+  PRIMARY KEY(`DNI`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `videojuegos`(
+  `CodigoId` VARCHAR(50) NOT NULL,
+  `Titulo` text NOT NULL,
+  `Desarrolladora` text NOT NULL,
+  `Rating` float DEFAULT 0,
+  `Precio` float NOT NULL, 
+  PRIMARY KEY (`CodigoId`)
+ 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `tiene` (
+    `CodigoId` VARCHAR(50) NOT NULL,
+    `DNIUsuario` CHAR(9) NOT NULL,
+    PRIMARY KEY (`CodigoId`, `DNIUsuario`),
+    FOREIGN KEY (`CodigoId`) REFERENCES videojuegos(`CodigoId`),
+    FOREIGN KEY (`DNIUsuario`) REFERENCES usuarios(`DNI`)  -- Cambiar "usuario" por "usuarios"
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
