@@ -1,14 +1,6 @@
 <?php
     switch ($_SERVER['REQUEST_URI']) {
-        case '/register':
-            require 'register.html';
-            break;
-        case '/login':
-            require 'login.html';
-            break;
-
         case '/':
-            echo '<h1>Yeah, it works!</h1>';
             echo '<a href="/register">Registrarse</a><br>';
             echo '<a href="/login">Login</a><br>';
             // phpinfo();
@@ -33,6 +25,15 @@
                     </tr>";
             }
             break;
+
+
+        case '/register':
+            require 'register.html';
+            break;
+
+        case '/login':
+            require 'login.html';
+            break;  
 
         default:
             echo '404 not found';
