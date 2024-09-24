@@ -54,6 +54,13 @@ CREATE TABLE `videojuegos`(
     --FOREIGN KEY (`DNIUsuario`) REFERENCES usuarios(`DNI`)  -- Cambiar "usuario" por "usuarios"
 --) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+
+CREATE TABLE `datosLogin` (
+  `NombreUsuario` VARCHAR(20) NOT NULL,
+  `Contraseña` VARCHAR(30) NOT NULL,
+  PRIMARY KEY(`NombreUsuario`)
+);
+
 --
 -- Volcado de datos para la tabla `usuarios`
 --
