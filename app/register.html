@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <body>
-        <h1>lol, lmao even</h1>
+        <h1>Registro de usuario</h1>
         <script>
             function DNIcorrecto(dni)
                 {
@@ -18,7 +18,7 @@
                         21:"K",22:"E"
                      
                     };
-                    return dni[8]==dic[numeroDNI];
+                    return dni[9]==dic[numeroDNI];
                 }
             function validar() {
 
@@ -29,7 +29,7 @@
                 //Comprobar si nombre y apellido solamente contienen texto
                 if (!/^[a-zA-Z\s]+$/.test(valorIntroducido))
                 {
-                    respuesta+="Solo se puede introducir letras en el nombre!!!, Por favor ponga su nombre \n";
+                    respuesta+="Solo se pueden introducir letras en el nombre!!!, Por favor ponga su nombre\n";
                     respuestasCorrectas=false;
                     
                 }
@@ -37,7 +37,7 @@
                 valorIntroducido=document.getElementById("dni").value;
 
                 //Comprobar letra DNI correcta y que el formato es correcto, mediante una expresión regular
-                if( !(valorIntroducido.length==9 && /^[0-9]{8}[A-Z]$/.test(valorIntroducido) && DNIcorrecto(valorIntroducido)))
+                if( !(valorIntroducido.length==10 && /^[0-9]{8}-[A-Z]$/.test(valorIntroducido) && DNIcorrecto(valorIntroducido)))
                 {
                     respuesta+="El DNI no es correcto \n";
                     respuestasCorrectas=false;
@@ -48,7 +48,7 @@
                 valorIntroducido=document.getElementById("telefono").value;
                 if(!(valorIntroducido.length==9 && /^[0-9]{9}$/.test(valorIntroducido)))
                 {
-                    respuesta+="El telefono debe de tener 9 digitos \n";
+                    respuesta+="El teléfono debe de tener 9 dígitos\n";
                     respuestasCorrectas=false;
                     
                 }
@@ -58,8 +58,6 @@
                 if(!( /^\d{4}-\d{2}-\d{2}$/.test(valorIntroducido) && !isNaN(Date.parse(valorIntroducido))))
                 {
                     // isNaN(Date.parse(valorIntroducido)) si es una fecha valida devuelve false
-                    window.alert(isNaN(Date.parse(valorIntroducido)));
-                    window.alert(Date.parse(valorIntroducido))
                     respuesta+="La fecha introducida debe de tener este formato YYYY-MM-dd \n"; //https://es.stackoverflow.com/questions/302153/validar-fecha-que-introduce-el-usuario-en-javascript
                     respuestasCorrectas=false;
                     
@@ -70,12 +68,24 @@
                 {
                     respuesta+="El gmail no es correcto \n";
                     respuestasCorrectas=false;
-                    
                 }
 
+                if (document.getElementById("password1").value != document.getElementById("password2").value) {
+                    respuesta += "Las contraseñas no coinciden\n";
+                    respuestasCorrectas = false;
+                }
+
+                if (document.getElementById("password1").value.length == 0) {
+                    respuesta += "La contraseña no puede estar vacía\n";
+                    respuestasCorrectas = false;
+                }
+
+                if (document.getElementById("username").value.length == 0) {
+                    respuesta += "El nombre de usuario no puede estar vacío\n";
+                    respuestasCorrectas = false;
+                }
 
                 if (respuestasCorrectas){
-                    window.alert(document.register_form.nombre.value);
                     document.register_form.submit();
                 }
                 else{
@@ -85,7 +95,7 @@
             }
         </script>
 
-        <form name="register_form" id="register_submit" action="registrar.php" method="POST">
+        <form name="register_form" id="register_submit" action="register.php" method="POST">
             <label for="name">Nombre y apellidos:</label><br>
             <input type="text" id="nombre" name="nombre"><br>
             <label for="name">DNI:</label><br>
@@ -96,6 +106,12 @@
             <input type="text" id="fecha" name="fecha"><br>
             <label for="name">Email:</label><br>
             <input type="text" id="email" name="email"><br>
+            <label for="name">Nombre de usuario:</label><br>
+            <input type="text" id="username" name="username"><br>
+            <label id="c1">Contraseña:</label><br>
+            <input type="password" id="password1" name="password1"><br>
+            <label id="c2">Repetir contraseña:</label><br>
+            <input type="password" id="password2" name="password2"><br>
             <input type="button" value="Submit" id="register_submit" onclick="validar()">
         </form>
 

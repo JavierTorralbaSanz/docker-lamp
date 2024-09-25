@@ -28,12 +28,15 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `usuarios` (
-  `DNI` char(9) NOT NULL,
+  `dni` char(10) NOT NULL,
   `nombre` text NOT NULL,
   `telefono` text NOT NULL,
   `fecha` text NOT NULL,
   `email` text NOT NULL,
-  PRIMARY KEY(`DNI`)
+  `username` varchar(50) NOT NULL,
+  `contraseña` text NOT NULL,
+  PRIMARY KEY(`username`),
+  UNIQUE(`DNI`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `videojuegos`(
@@ -43,31 +46,21 @@ CREATE TABLE `videojuegos`(
   `Rating` float DEFAULT 0,
   `Precio` float NOT NULL, 
   PRIMARY KEY (`CodigoId`)
- 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---CREATE TABLE `tiene` (
-  --  `CodigoId` VARCHAR(50) NOT NULL,
-    --`DNIUsuario` CHAR(9) NOT NULL,
-    --PRIMARY KEY (`CodigoId`, `DNIUsuario`),
-    --FOREIGN KEY (`CodigoId`) REFERENCES videojuegos(`CodigoId`),
-    --FOREIGN KEY (`DNIUsuario`) REFERENCES usuarios(`DNI`)  -- Cambiar "usuario" por "usuarios"
---) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
 
 CREATE TABLE `datosLogin` (
   `NombreUsuario` VARCHAR(20) NOT NULL,
   `Contraseña` VARCHAR(30) NOT NULL,
   PRIMARY KEY(`NombreUsuario`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`dni`, `nombre`) VALUES
-  ('12345678A', 'mikel'),
-  ('12345678B', 'aitor');
+INSERT INTO `usuarios` (`dni`, `nombre`, `username`) VALUES
+  ('12345678-A', 'mikel', 'a'),
+  ('12345678-B', 'aitor', 'b');
 
 --
 -- Índices para tablas volcadas

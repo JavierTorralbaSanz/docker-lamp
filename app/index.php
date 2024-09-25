@@ -1,5 +1,5 @@
 <?php
-    switch ($_SERVER['REQUEST_URI']) {
+    switch (explode("?", $_SERVER['REQUEST_URI'])[0]) {
         case '/':
             echo '<a href="/register">Registrarse</a><br>';
             echo '<a href="/login">Login</a><br>';
@@ -33,7 +33,11 @@
 
         case '/login':
             require 'login.html';
-            break;  
+            break;
+        
+        case '/show_user':
+            require 'show_user.php';
+            break;
 
         default:
             echo '404 not found';
