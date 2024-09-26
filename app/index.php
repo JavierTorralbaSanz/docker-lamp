@@ -1,8 +1,18 @@
 <?php
+
+    session_start();
+
     switch (explode("?", $_SERVER['REQUEST_URI'])[0]) {
         case '/':
-            echo '<a href="/register">Registrarse</a><br>';
-            echo '<a href="/login">Login</a><br>';
+            if (!isset($_SESSION['usuario'])) {
+                echo '<a href="/register">Registrarse</a><br>';
+                echo '<a href="/login">Login</a><br>';
+            }
+            else {
+                echo '<a href="/show_user?user=' . $_SESSION['usuario'] . '">Info usuario</a><br>';
+                echo '<a href="/logout">Cerrar sesión</a><br>';
+            }
+            
             // phpinfo();
             $hostname = "db";
             $username = "admin";
@@ -37,6 +47,11 @@
         
         case '/show_user':
             require 'show_user.php';
+            break;
+        
+        case '/logout':
+            unset($_SESSION['usuario']);
+            header('Location: /');
             break;
 
         default:

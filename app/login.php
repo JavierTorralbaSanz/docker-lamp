@@ -1,5 +1,5 @@
 <?php
-    $nombreUsuario = $_POST['nombreUsuario'];
+    $nombreUsuario = $_POST['nombre'];
     $contraseña = $_POST['contraseña'];
 
     $hostname = "db";
@@ -12,8 +12,19 @@
         die("Database connection failed: " . $conn->connect_error);
     }
 
-    if (mysqli_query($conn, "INSERT INTO datosLogin(nombreUsuario,contraseña) VALUES('$nombreUsuario','$contraseña')")) {
-        echo 'Login exitoso';
+    $resultado = mysqli_query($conn, "SELECT contraseña FROM usuarios WHERE username = '$nombreUsuario'");
+
+    if ($resultado->num_rows == 1) {
+        session_start();
+        $resultado = mysqli_fetch_array($resultado);
+        if ($resultado['contraseña'] == $contraseña) {
+            echo 'Usuario y contraseña correctos<br>';
+            $_SESSION['usuario'] = $nombreUsuario;
+        }
+        else {
+            echo 'Contraseña incorrecta<br>';
+            echo '<a href="/">Página principal</a>';
+        }
     }
     else {
         die('error: ' . mysqli_error($conn));

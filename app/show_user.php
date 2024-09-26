@@ -7,7 +7,7 @@
         return;
     }
 
-    $dni = $params['user'];
+    $usuario = $params['user'];
 
     $hostname = "db";
     $username = "admin";
@@ -19,7 +19,7 @@
         die("Database connection failed: " . $conn->connect_error);
     }
 
-    $query = mysqli_query($conn, "SELECT * FROM usuarios WHERE dni = '$dni'")
+    $query = mysqli_query($conn, "SELECT * FROM usuarios WHERE username = '$usuario'")
         or die (mysqli_error($conn));
 
     $row = mysqli_fetch_array($query);
@@ -32,7 +32,7 @@
         echo 'Email: ' . $row['email'] . '<br>';
     }
     else {
-        echo 'No existe ningún usuario con DNI \'' . $dni . '\'<br>';
+        echo 'No existe ningún usuario con DNI \'' . $usuario . '\'<br>';
         echo '<a href="/">Página inicial</a>';
     }
 ?>

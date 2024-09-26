@@ -48,19 +48,13 @@ CREATE TABLE `videojuegos`(
   PRIMARY KEY (`CodigoId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE `datosLogin` (
-  `NombreUsuario` VARCHAR(20) NOT NULL,
-  `Contraseña` VARCHAR(30) NOT NULL,
-  PRIMARY KEY(`NombreUsuario`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`dni`, `nombre`, `username`) VALUES
-  ('12345678-A', 'mikel', 'a'),
-  ('12345678-B', 'aitor', 'b');
+INSERT INTO `usuarios` (`dni`, `nombre`, `username`, `contraseña`) VALUES
+  ('12345678-A', 'mikel', 'a', 'a'),
+  ('12345678-B', 'aitor', 'b', 'b');
 
 --
 -- Índices para tablas volcadas
