@@ -1,4 +1,7 @@
 <?php
+
+session_start();
+
     $nombreUsuario = $_POST['nombre'];
     $contraseña = $_POST['contraseña'];
 
@@ -12,22 +15,20 @@
         die("Database connection failed: " . $conn->connect_error);
     }
 
-    $resultado = mysqli_query($conn, "SELECT contraseña FROM usuarios WHERE username = '$nombreUsuario'");
+$sql = "SELECT * FROM usuarios WHERE username = '$nombreUsuario' AND contrasena = '$contraseña'";
+$resultado = $conn->query($sql);
+if (!$resultado) {
+    die("Error en la consulta: " . mysqli_error($conn));
+}
 
-    if ($resultado->num_rows == 1) {
-        session_start();
-        $resultado = mysqli_fetch_array($resultado);
-        if ($resultado['contraseña'] == $contraseña) {
-            echo 'Usuario y contraseña correctos<br>';
-            $_SESSION['usuario'] = $nombreUsuario;
-        }
-        else {
-            echo 'Contraseña incorrecta<br>';
-            echo '<a href="/">Página principal</a>';
-        }
-    }
-    else {
-        die('error: ' . mysqli_error($conn));
-    }
+//Verificar si el usuario existe y la contraseña coincide
+if (mysqli_num_rows($resultado) > 0) {
+    $_SESSION['usuario'] = $nombreUsuario;
+    echo "Inicio de sesión exitoso. Bienvenido " . $nombreUsuario;
+  //  header("Location: register.php");
+    exit; 
+} else {
+    echo "Error: Nombre de usuario o contraseña incorrectos.";
+}
 
 ?>
