@@ -49,6 +49,10 @@
             require 'show_user.php';
             break;
         
+        case '/modify_user':
+            require 'modify_user.php';
+            break;
+        
         case '/logout':
             unset($_SESSION['usuario']);
             header('Location: /');

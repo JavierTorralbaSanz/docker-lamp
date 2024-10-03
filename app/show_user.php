@@ -25,11 +25,13 @@
     $row = mysqli_fetch_array($query);
 
     if ($row) {
+        echo 'Nombre de usuario: ' . $usuario . '<br>';
         echo 'DNI: ' . $row['dni'] . '<br>';
         echo 'Nombre: ' . $row['nombre'] . '<br>';
         echo 'Teléfono: ' . $row['telefono'] . '<br>';
         echo 'Fecha de nacimiento: ' . $row['fecha'] . '<br>';
         echo 'Email: ' . $row['email'] . '<br>';
+        echo '<a href="/modify_user?user=' . $usuario . '">Modificar datos</a><br>';
     }
     else {
         echo 'No existe ningún usuario con DNI \'' . $usuario . '\'<br>';

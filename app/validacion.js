@@ -15,76 +15,65 @@ function DNIcorrecto(dni)
     };
     return dni[9]==dic[numeroDNI];
 }
-function validar() {
 
-var respuesta=""
-var valorIntroducido=document.getElementById("nombre").value;
-var respuestasCorrectas=true;
-
-//Comprobar si nombre y apellido solamente contienen texto
-if (!/^[a-zA-Z\s]+$/.test(valorIntroducido))
-{
-    respuesta+="Solo se pueden introducir letras en el nombre!!!, Por favor ponga su nombre\n";
-    respuestasCorrectas=false;
-    
+function validar_dni(dni) {
+    //Comprobar letra DNI correcta y que el formato es correcto, mediante una expresión regular
+    if( !(dni.length==10 && /^[0-9]{8}-[A-Z]$/.test(dni) && DNIcorrecto(dni)))
+    {
+        return false;   
+    }
+    return true;
 }
 
-valorIntroducido=document.getElementById("dni").value;
-
-//Comprobar letra DNI correcta y que el formato es correcto, mediante una expresión regular
-if( !(valorIntroducido.length==10 && /^[0-9]{8}-[A-Z]$/.test(valorIntroducido) && DNIcorrecto(valorIntroducido)))
-{
-    respuesta+="El DNI no es correcto \n";
-    respuestasCorrectas=false;
-    
+function validar_nombre(nombre) {
+    if (!/^[a-zA-Z\s]+$/.test(nombre))
+    {
+        return false;
+    }
+    return true;
 }
 
-//Comprobar digito de telefono solo 9 digitos.
-valorIntroducido=document.getElementById("telefono").value;
-if(!(valorIntroducido.length==9 && /^[0-9]{9}$/.test(valorIntroducido)))
-{
-    respuesta+="El teléfono debe de tener 9 dígitos\n";
-    respuestasCorrectas=false;
-    
+function validar_telefono(telefono) {
+    //Comprobar digito de telefono solo 9 digitos.
+    if(!(telefono.length==9 && /^[0-9]{9}$/.test(telefono)))
+    {
+        return false;
+    }
+    return true;
 }
 
-//Fecha de Nacimiento en formato de 1999-08-26
-valorIntroducido=document.getElementById("fecha").value;
-if(!( /^\d{4}-\d{2}-\d{2}$/.test(valorIntroducido) && !isNaN(Date.parse(valorIntroducido))))
-{
-    // isNaN(Date.parse(valorIntroducido)) si es una fecha valida devuelve false
-    respuesta+="La fecha introducida debe de tener este formato YYYY-MM-dd \n"; //https://es.stackoverflow.com/questions/302153/validar-fecha-que-introduce-el-usuario-en-javascript
-    respuestasCorrectas=false;
-    
+function validar_fecha(fecha) {
+    //Fecha de Nacimiento en formato de 1999-08-26
+    if(!( /^\d{4}-\d{2}-\d{2}$/.test(fecha) && !isNaN(Date.parse(fecha))))
+    {
+        return false;
+    }
+    return true;
 }
 
-//Solo formatos de email validos ejemplo@servidor.extension
-if ((/^[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*@gmail\.com$/.test(valorIntroducido)))
-{
-    respuesta+="El gmail no es correcto \n";
-    respuestasCorrectas=false;
+function validar_email(email) {
+    //Solo formatos de email validos ejemplo@servidor.extension
+    if (!(/^[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*@gmail\.com$/.test(email)))
+    {
+        return false;
+    }
+    return true;
 }
 
-if (document.getElementById("password1").value != document.getElementById("password2").value) {
-    respuesta += "Las contraseñas no coinciden\n";
-    respuestasCorrectas = false;
+function validar_passwords(c1, c2) {
+    if (c1 != c2) {
+        return false;
+    }
+
+    if (c1.length == 0) {
+        return false;
+    }
+    return true;
 }
 
-if (document.getElementById("password1").value.length == 0) {
-    respuesta += "La contraseña no puede estar vacía\n";
-    respuestasCorrectas = false;
-}
-
-if (document.getElementById("username").value.length == 0) {
-    respuesta += "El nombre de usuario no puede estar vacío\n";
-    respuestasCorrectas = false;
-}
-
-if (respuestasCorrectas){
-    document.register_form.submit();
-}
-else{
-    window.alert("Ha ocurrido algun error en alguna de sus repuestas:\n"+respuesta);
-}
-
+function validar_username(username) {
+    if (username.length == 0) {
+        return false;
+    }
+    return true;
 }
