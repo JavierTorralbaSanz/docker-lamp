@@ -40,7 +40,7 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `videojuegos`(
-  `CodigoId` VARCHAR(50) NOT NULL,
+  `CodigoId` INT AUTO_INCREMENT NOT NULL,
   `Titulo` text NOT NULL,
   `Desarrolladora` text NOT NULL,
   `Rating` float DEFAULT 0,

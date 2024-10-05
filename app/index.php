@@ -7,6 +7,8 @@
             if (!isset($_SESSION['usuario'])) {
                 echo '<a href="/register">Registrarse</a><br>';
                 echo '<a href="/login">Login</a><br>';
+                echo '<a href="/add_item">Añadir juego</a><br>';
+                echo '<a href="/items">Ver lista videojuegos</a><br>';
             }
             else {
                 echo '<a href="/show_user?user=' . $_SESSION['usuario'] . '">Info usuario</a><br>';
@@ -49,9 +51,21 @@
             require 'show_user.php';
             break;
         
+        case '/modify_user':
+            require 'modify_user.php';
+            break;
+        
         case '/logout':
             unset($_SESSION['usuario']);
             header('Location: /');
+            break;
+
+        case '/add_item':
+            require 'annadir_juego.php';
+            break;
+
+        case '/items':
+            require 'items.php';
             break;
 
         default:

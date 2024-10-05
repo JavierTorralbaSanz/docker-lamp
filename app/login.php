@@ -15,7 +15,7 @@ session_start();
         die("Database connection failed: " . $conn->connect_error);
     }
 
-$sql = "SELECT * FROM usuarios WHERE username = '$nombreUsuario' AND contrasena = '$contraseña'";
+$sql = "SELECT * FROM usuarios WHERE username = '$nombreUsuario' AND contraseña = '$contraseña'";
 $resultado = $conn->query($sql);
 if (!$resultado) {
     die("Error en la consulta: " . mysqli_error($conn));
@@ -24,7 +24,8 @@ if (!$resultado) {
 //Verificar si el usuario existe y la contraseña coincide
 if (mysqli_num_rows($resultado) > 0) {
     $_SESSION['usuario'] = $nombreUsuario;
-    echo "Inicio de sesión exitoso. Bienvenido " . $nombreUsuario;
+    echo "Inicio de sesión exitoso. Bienvenido " . $nombreUsuario . "<br>";
+    echo '<a href="/">Página principal</a>';
   //  header("Location: register.php");
     exit; 
 } else {
