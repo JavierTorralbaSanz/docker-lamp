@@ -12,7 +12,7 @@
 include 'config.php'; // Asegúrate de incluir tu configuración de base de datos
 
 // Consulta para obtener todos los videojuegos
-$query = "SELECT CodigoId, Titulo, Desarrolladora FROM videojuegos";
+$query = "SELECT id, titulo, desarrolladora FROM videojuegos";
 $result = $conn->query($query);
 
 if ($result->num_rows > 0) {
@@ -22,11 +22,11 @@ if ($result->num_rows > 0) {
     // Recorre cada videojuego y muestra los datos
     while ($row = $result->fetch_assoc()) {
         echo "<li>";
-        echo "<strong>Título:</strong> " . ($row['Titulo']) . "<br>";  // Muestra el título
-        echo "<strong>Desarrolladora:</strong> " . ($row['Desarrolladora']) . "<br>";  // Muestra la desarrolladora
-        echo "<a href='/show_item?item=" . ($row['CodigoId']) . "'>Ver Detalles</a> | "; // Enlace a detalles
-        echo "<a href='/modify_item?item=" . ($row['CodigoId']) . "'>Modificar</a> | "; // Enlace para modificar
-        echo "<a href='/delete_item?item=" . ($row['CodigoId']) . "'>Eliminar</a>"; // Enlace para eliminar
+        echo "<strong>Título:</strong> " . ($row['titulo']) . "<br>";  // Muestra el título
+        echo "<strong>Desarrolladora:</strong> " . ($row['desarrolladora']) . "<br>";  // Muestra la desarrolladora
+        echo "<a href='/show_item?item=" . ($row['id']) . "'>Ver Detalles</a> | "; // Enlace a detalles
+        echo "<a href='/modify_item?item=" . ($row['id']) . "'>Modificar</a> | "; // Enlace para modificar
+        echo "<a href='/delete_item?item=" . ($row['id']) . "'>Eliminar</a>"; // Enlace para eliminar
         echo "</li>";
     }
     

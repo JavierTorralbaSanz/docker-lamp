@@ -9,6 +9,7 @@
 
     $itemId = $params['item'];
 
+    include 'config.php';
     $query = mysqli_query($conn, "SELECT * FROM videojuegos WHERE id = '$itemId'")
         or die(mysqli_error($conn));
 

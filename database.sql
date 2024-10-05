@@ -40,12 +40,12 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `videojuegos`(
-  `CodigoId` INT AUTO_INCREMENT NOT NULL,
-  `Titulo` text NOT NULL,
-  `Desarrolladora` text NOT NULL,
-  `Rating` float DEFAULT 0,
-  `Precio` float NOT NULL, 
-  PRIMARY KEY (`CodigoId`)
+  `id` INT AUTO_INCREMENT NOT NULL,
+  `titulo` text NOT NULL,
+  `desarrolladora` text NOT NULL,
+  `rating` float DEFAULT 0,
+  `precio` float NOT NULL, 
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --

@@ -67,6 +67,10 @@
         case '/items':
             require 'items.php';
             break;
+        
+        case '/show_item':
+            require 'show_juego.php';
+            break;
 
         default:
             echo '404 not found';
