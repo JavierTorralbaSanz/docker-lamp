@@ -71,8 +71,11 @@
         case '/show_item':
             require 'show_juego.php';
             break;
-	case '/delete_item':
+	    case '/delete_item':
             require 'eliminar_juego.php';
+            break;
+        case '/modify_item':
+            require 'modify_item.php';
             break;
         default:
             echo '404 not found';

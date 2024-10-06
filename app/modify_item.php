@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $query = "UPDATE videojuegos SET Titulo = '$titulo', Desarrolladora = '$desarrolladora', Rating = '$rating', Precio = '$precio' WHERE id = $id";
 
     if ($conn->query($query) === TRUE) {
-        header("Location: /?message=Juego%20modificado%20exitosamente");
+        header("Location: /items?message=Juego%20modificado%20exitosamente");
         exit();
     } else {
         echo "Error: " . $conn->error;
@@ -25,22 +25,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $conn->close();
 } else {
-    if (!isset($_GET['id'])) {
-        echo "No se ha especificado un ID de videojuego<br>";
+   parse_str($_SERVER['QUERY_STRING'], $params);
+
+    if (!isset($params['item'])) {
+        echo 'No se ha especificado un ID de videojuego<br>';
         echo '<a href="/">Página inicial</a>';
-        exit();
+        return; 
     }
-
-    $id = (int)$_GET['id'];
-
+    $itemId = $params['item'];
     // Consulta para obtener los detalles del juego
-    $query = mysqli_query($conn, "SELECT * FROM videojuegos WHERE id = '$id'")
+    $query = mysqli_query($conn, "SELECT * FROM videojuegos WHERE id = '$itemId'")
         or die(mysqli_error($conn));
 
     $item = mysqli_fetch_array($query);
 
     if (!$item) {
-        echo "No existe un videojuego con ID '$id'<br>";
+        echo "No existe un videojuego con ID '$itemId'<br>";
         echo '<a href="/">Página inicial</a>';
         exit();
     }
@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
     <h2>Modificar Juego</h2>
     <form action="modify_item.php" method="post">
-        <input type="hidden" name="id" value="<?php echo $id; ?>">
+        <input type="hidden" name="id" value="<?php echo $item['id']; ?>">
         
         <label for="titulo">Título:</label>
         <input type="text" name="titulo" id="titulo" value="<?php echo $item['Titulo']; ?>" required><br>
