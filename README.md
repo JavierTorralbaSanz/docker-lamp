@@ -4,16 +4,46 @@ Linux + Apache + MariaDB (MySQL) + PHP 7.2 on Docker Compose. Mod_rewrite enable
 
 ## Instructions
 
-Enter the following command to start your containers:
+
+Clona el repositorio:
+
+```bash
+$git clone git@github.com:JavierTorralbaSanz/docker-lamp.git
+
+```
+Entra donde has clonado el repositorio:
+```bash
+$ cd docker-lamp
+
+```
+Pon el siguiente comando para poner en marcha los containers:
 ```bash
 $ docker-compose up -d
 ```
 
-To stop them, use this:
+Para paralos, usa esto:
 ```bash
 $ docker-compose stop
 ```
 
+En otra terminal, veremos los puertos del sistema ejecutaremos el comando:
+
+```bash
+$ docker-compose ps
+```
+Se estarán usando los puertos 81, 8890 y 8891. Introducineros en el navegador:
+
+localhost:81/, para acceder al sistema
+localhost:8890/, para acceder a phpmyadmin. En phpmyadmin entraremos con el usuario "admin" y con la contraseá "test". Una vez dentro se creará una base de datos llamada database. La seleccionamos e importamos la base de datos del proyecto llamada database.sql
 Feel free to make pull requests and help to improve this.
 
 If you are looking for phpMyAdmin, take a look at [this](https://github.com/celsocelante/docker-lamp/issues/2).
+
+## Miembros
+	-Peio Orbe
+	-Javier Torralba
+	-Jon Izaguirre
+	-Iker Marin
+	-Raúl Álvarez
+	-Eneko De la Fuente
+	
