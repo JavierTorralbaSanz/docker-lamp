@@ -2,7 +2,8 @@
 include 'config.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (empty($_POST['id']) || empty($_POST['titulo']) || empty($_POST['desarrolladora']) || empty($_POST['rating']) || empty($_POST['precio'])) {
+    if (empty($_POST['id']) || empty($_POST['titulo']) || empty($_POST['desarrolladora']) || empty($_POST['rating'])
+            || empty($_POST['precio']) || empty($_POST['genero'])) {
         echo "Todos los campos son obligatorios.";
         exit();
     }
@@ -12,9 +13,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $desarrolladora = $_POST['desarrolladora'];
     $rating = (float)$_POST['rating'];
     $precio = (float)$_POST['precio'];
+    $genero = $_POST['genero'];
 
     // Consulta para actualizar el juego
-    $query = "UPDATE videojuegos SET Titulo = '$titulo', Desarrolladora = '$desarrolladora', Rating = '$rating', Precio = '$precio' WHERE id = $id";
+    $query = "UPDATE videojuegos SET titulo = '$titulo', desarrolladora = '$desarrolladora',
+        rating = '$rating', precio = '$precio', genero = '$genero' WHERE id = $id";
 
     if ($conn->query($query) === TRUE) {
         header("Location: /items?message=Juego%20modificado%20exitosamente");
@@ -67,6 +70,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <label for="precio">Precio:</label>
         <input type="number" step="0.01" name="precio" id="precio" value="<?php echo $item['Precio']; ?>" required min="0"><br>
+
+        <label for="genero">Género:</label>
+        <input type="text" name="genero" id="genero" required><br>
 
         <input type="submit" value="Modificar">
     </form>

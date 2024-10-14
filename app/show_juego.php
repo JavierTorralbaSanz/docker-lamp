@@ -19,9 +19,10 @@
         echo '<h2>Detalles del Videojuego</h2>';
         echo 'Nombre de usuario: ' . $itemId . '<br>';
         echo 'Título: ' . $item['titulo'] . '<br>';
-        echo 'Desarroladora: ' . $item['desarrolladora'] . '<br>';
+        echo 'Desarrolladora: ' . $item['desarrolladora'] . '<br>';
         echo 'Rating: ' . $item['rating'] . '<br>';
-        echo 'Precio: ' . $item['precio'] . '<br>'; 
+        echo 'Precio: ' . $item['precio'] . '<br>';
+        echo 'Género: ' . $item['genero'] . '<br>';
         echo '<a href="/">Volver</a>';
     } else {
         echo 'No existe un videojuego con ID \'' . $itemId . '\'<br>';

@@ -11,8 +11,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $desarrolladora = $_POST['desarrolladora'];
     $rating = (float)$_POST['rating'];
     $precio = (float)$_POST['precio'];
+    $genero = $_POST['genero'];
 
-    $query = "INSERT INTO videojuegos (Titulo, Desarrolladora, Rating, Precio) VALUES ('$titulo', '$desarrolladora', '$rating', $precio)";
+    $query = "INSERT INTO videojuegos (titulo, desarrolladora, rating, precio, genero)
+        VALUES ('$titulo', '$desarrolladora', '$rating', '$precio', '$genero')";
 
     if ($conn->query($query) === TRUE) {
         header("Location: /?message=Juego%20añadido%20exitosamente");
@@ -46,6 +48,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <label for="precio">Precio:</label>
         <input type="number" step="0.01" name="precio" id="precio" required min="0"><br> <!-- step="0.1" permite decimales -->
+
+        <label for="genero">Género:</label>
+        <input type="text" name="genero" id="genero" required><br>
 
         <input type="submit" value="Añadir">
     </form>

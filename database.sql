@@ -44,7 +44,8 @@ CREATE TABLE `videojuegos`(
   `titulo` text NOT NULL,
   `desarrolladora` text NOT NULL,
   `rating` float DEFAULT 0,
-  `precio` float NOT NULL, 
+  `precio` float NOT NULL,
+  `genero` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
