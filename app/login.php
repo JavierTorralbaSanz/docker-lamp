@@ -1,10 +1,11 @@
 <?php
 
 session_start();
-
+    //Obtener datos del usuario
     $nombreUsuario = $_POST['nombre'];
     $contraseña = $_POST['contraseña'];
-
+    
+    //Proceso para conectarese a la base de datos
     $hostname = "db";
     $username = "admin";
     $password = "test";
@@ -15,6 +16,7 @@ session_start();
         die("Database connection failed: " . $conn->connect_error);
     }
 
+// Busca  en la sql si algún usuario tiene ese nombre y esa contraseña
 $sql = "SELECT * FROM usuarios WHERE username = '$nombreUsuario' AND contraseña = '$contraseña'";
 $resultado = $conn->query($sql);
 if (!$resultado) {

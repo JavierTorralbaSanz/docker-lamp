@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html>
-    <body>
+        <!--Este archivo incluye la interacción del proceso de registrarse por parte del usuario-->
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="estilos.css"> <!--Parte visual en estilos.css-->
+    </head> 
+    <body class="register-page">
         <h1>Registro de usuario</h1>
-        <script src="validacion.js"> </script>
+        <script src="validacion.js"> </script> <!--Comprobar datos introducidos con validacion.js-->
 
         <script>
+            //Funciones de Javascript para notificar errores de datos introducidos por el usuario 
             function validar_datos() {
                 var nombre = document.getElementById('nombre').value;
                 var dni = document.getElementById('dni').value;
@@ -45,6 +51,7 @@
             }
         </script>
 
+        <!--Formulario que indica los datos que debe de introducir el usuario-->
         <form name="register_form" id="register_form" action="register.php" method="POST">
             <label for="name">Nombre y apellidos:</label><br>
             <input type="text" id="nombre" name="nombre"><br>
@@ -64,6 +71,7 @@
             <input type="password" id="password2" name="password2"><br>
             <input type="button" value="Submit" id="register_submit" onclick="validar_datos()">
         </form>
+        <!--Los datos introducidos correctos se almacenan en la sql a traves de register.php-->
 
     </body>
 </html>

@@ -32,8 +32,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <title>Añadir Juego</title>
 </head>
-<body>
-    <h2>Añadir Juego</h2>
+<head>
+        <link rel="stylesheet" type="text/css" href="estilos.css"> <!--Parte visual en estilos.css-->
+</head>
+<body class=añadir-juego>
+    <h1>Añadir Juego</h1>
     <form action="annadir_juego.php" method="post">
 
 

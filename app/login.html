@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html>
-    <body>
+    <!--Este archivo incluye la interacción de INICIAR SESIÓN por parte del usuario-->
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="estilos.css"> <!--La parte visual de INICIAR SESIÓN se determina mediante un archivo CSS, llamado estilos.css-->
+    </head>
+    <body class="login-page">
 
         <h1>Iniciar Sesión</h1>
 
-   <form name="login_form" id="register_submit" action="login.php" method="POST">
-
+   <form name="login_form" id="register_submit" action="login.php" method="POST"> 
+    <!--Es el formulario mediante el cual se le pide el usuario inicia sesión-->
     <label for="nombre">Nombre de usuario:</label>
     <input type="text" id="nombre" name="nombre" required><br>
     <label for="contraseña">Contraseña:</label>
     <input type="password" id="contraseña" name="contraseña" required><br>
 
     <input type="submit" value="Iniciar Sesión">
-    
+    <!--Una vez pulsado el botón de submit los datos introducidos irán a login.php-->
 </form>
 
     </body>

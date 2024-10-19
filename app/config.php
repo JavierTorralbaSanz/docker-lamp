@@ -1,4 +1,5 @@
 <?php
+//Proceso para conectarese a la base de datos
 $servername = "db"; 
 $username = "admin";
 $password = "test";

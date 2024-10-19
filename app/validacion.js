@@ -1,5 +1,9 @@
+
+
 function DNIcorrecto(dni)
 {
+    //Funcion que se usa para verificar si la lera del DNI es correcta
+    //Se puede saber si la letra del DNI es correcta segun los numeros del DNI
     var numeroDNI=dni.substring(0,8);
     numeroDNI=parseInt(numeroDNI)%23;
     let dic={
@@ -26,6 +30,7 @@ function validar_dni(dni) {
 }
 
 function validar_nombre(nombre) {
+    //Un nombre solo podra ser valido si esta compuesto por valores aalfabeticos
     if (!/^[a-zA-Z\s]+$/.test(nombre))
     {
         return false;
@@ -34,7 +39,7 @@ function validar_nombre(nombre) {
 }
 
 function validar_telefono(telefono) {
-    //Comprobar digito de telefono solo 9 digitos.
+    //Compruena ¡un numero de telefono solamente valdran los numeros de telefono de 9 digitos
     if(!(telefono.length==9 && /^[0-9]{9}$/.test(telefono)))
     {
         return false;
@@ -43,7 +48,8 @@ function validar_telefono(telefono) {
 }
 
 function validar_fecha(fecha) {
-    //Fecha de Nacimiento en formato de 1999-08-26
+    //Fecha de Nacimiento en formato de AA-YY-DD, un ejemplo: 1999-08-26
+    //!isNaN(Date.parse(fecha)) en este comando se comprueba si la fecha introducida es correcta
     if(!( /^\d{4}-\d{2}-\d{2}$/.test(fecha) && !isNaN(Date.parse(fecha))))
     {
         return false;
@@ -61,6 +67,7 @@ function validar_email(email) {
 }
 
 function validar_passwords(c1, c2) {
+    //Se comprueba si es el mismo password o sino se ha introducido nada para mantener o modificar el password
     if (c1 != c2) {
         return false;
     }
@@ -72,6 +79,8 @@ function validar_passwords(c1, c2) {
 }
 
 function validar_username(username) {
+    //Se comprueba si no se ha introducido ningun username
+    //Si no ha sido introducido ninguno el username se mantiene igual y si ha sido introducido un username este se cambia.
     if (username.length == 0) {
         return false;
     }
