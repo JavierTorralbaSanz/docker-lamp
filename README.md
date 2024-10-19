@@ -35,9 +35,6 @@ Se estarán usando los puertos 81, 8890 y 8891. Introducineros en el navegador:
 
 localhost:81/, para acceder al sistema
 localhost:8890/, para acceder a phpmyadmin. En phpmyadmin entraremos con el usuario "admin" y con la contraseá "test". Una vez dentro se creará una base de datos llamada database. La seleccionamos e importamos la base de datos del proyecto llamada database.sql
-Feel free to make pull requests and help to improve this.
-
-If you are looking for phpMyAdmin, take a look at [this](https://github.com/celsocelante/docker-lamp/issues/2).
 
 ## Miembros
 	-Peio Orbe
