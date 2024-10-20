@@ -57,6 +57,18 @@ INSERT INTO `usuarios` (`dni`, `nombre`, `username`, `contraseña`) VALUES
   ('12345678-A', 'mikel', 'a', 'a'),
   ('12345678-B', 'aitor', 'b', 'b');
 
+INSERT INTO `videojuegos` (`id`, `titulo`, `desarrolladora`, `rating`, `precio`,`genero`) VALUES
+(1, 'The Legend of Zelda: Breath of the Wild', 'Nintendo', 9.7, 59.99, 'Aventura'),
+(2, 'God of War', 'Santa Monica Studio', 9.8, 39.99, 'Acción'),
+(3, 'Red Dead Redemption 2', 'Rockstar Games', 9.5, 49.99, 'Acción/Aventura'),
+(4, 'Minecraft', 'Mojang', 9.3, 26.95, 'Sandbox'),
+(5, 'The Witcher 3: Wild Hunt', 'CD Projekt Red', 9.6, 29.99, 'RPG'),
+(6, 'Fortnite', 'Epic Games', 8.9, 0.00, 'Battle Royale'),
+(7, 'Among Us', 'InnerSloth', 8.2, 4.99, 'Multijugador'),
+(8, 'Cyberpunk 2077', 'CD Projekt Red', 7.5, 59.99, 'RPG/Ciencia ficción'),
+(9, 'Animal Crossing: New Horizons', 'Nintendo', 9.0, 59.99, 'Simulación'),
+(10, 'Overwatch', 'Blizzard Entertainment', 8.8, 19.99, 'Shooter'),
+(11, 'Halo Infinite', '343 Industries', 8.5, 59.99, 'Shooter en primera persona');
 --
 -- Índices para tablas volcadas
 --
