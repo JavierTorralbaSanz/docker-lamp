@@ -16,10 +16,20 @@
     $query = mysqli_query($conn, "DELETE FROM videojuegos WHERE id = '$itemId'")
         or die(mysqli_error($conn));
 
-    echo '<script>
-    alert("El videojuego seleccionado se ha eliminado correctamente.");
-    window.location.href = "/items";
-</script>';
+        echo '<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Inicio de Sesión</title>
+        <link rel="stylesheet" href="estilos.css">
+    </head>
+    <body>
+        <div class="message-container">
+            
+                 <h1>El videojuego seleccionado se ha eliminado correctamente </h1>
+                <a href="/items" class="link-button">Ir a mostrar juegos</a>
+        </div>
+    </body>';
+      
     exit();
     
 ?>
