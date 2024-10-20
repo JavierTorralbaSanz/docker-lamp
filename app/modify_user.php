@@ -83,15 +83,15 @@
 
             <form name='user_modify_form' id='user_modify_form' action='modify_user.php?user={$usuario}' method='POST'>
                 <label for='name'>Nombre y apellidos:</label><br>
-                <input type='text' id='nombre' name='nombre' value={$row['nombre']}><br>
+                <input type='text' id='nombre' name='nombre' value={$row['nombre']} placeholder='Solo se acepta texto'><br>
                 <label for='name'>DNI:</label><br>
-                <input type='text' id='dni' name='dni' value={$row['dni']}><br>
+                <input type='text' id='dni' name='dni' value={$row['dni']} placeholder='Formato: 00000000-T'><br>
                 <label for='name'>Teléfono:</label><br>
-                <input type='text' id='telefono' name='telefono' value={$row['telefono']}><br>
+                <input type='text' id='telefono' name='telefono' value={$row['telefono']} placeholder='Formato: 123456789'><br>
                 <label for='name'>Fecha de nacimiento:</label><br>
-                <input type='text' id='fecha' name='fecha' value={$row['fecha']}><br>
+                <input type='text' id='fecha' name='fecha' value={$row['fecha']} placeholder='Formato: aaaa-mm-dd'><br>
                 <label for='name'>Email:</label><br>
-                <input type='text' id='email' name='email' value={$row['email']}><br>
+                <input type='text' id='email' name='email' value={$row['email']} placeholder='Formato: nombre@dominio'><br>
                 <label id='c1'>Contraseña (vacía si no quiere cambiarla):</label><br>
                 <input type='password' id='password1' name='password1'><br>
                 <label id='c2'>Repetir contraseña:</label><br>

@@ -37,33 +37,13 @@
                             
                                <a href="/show_user?user=' . $_SESSION['usuario'] . '" class="link-button" >Info usuario</a><br>
                                <a href="/logout" class="link-button">Cerrar sesión</a><br>
+                               <a href="/add_item" class="link-button">Añadir juego</a><br>
+                               <a href="/items" class="link-button">Ver lista videojuegos</a><br>
                         <div>
                     </body>';
                 
             }
             
-            // phpinfo();
-            $hostname = "db";
-            $username = "admin";
-            $password = "test";
-            $db = "database";
-
-            $conn = mysqli_connect($hostname,$username,$password,$db);
-            if ($conn->connect_error) {
-                die("Database connection failed: " . $conn->connect_error);
-            }
-
-            //Se imprime el id y el nombre de los usuarios registrados
-            $query = mysqli_query($conn, "SELECT * FROM usuarios")
-                or die (mysqli_error($conn));
-
-            while ($row = mysqli_fetch_array($query)) {
-                echo
-                    "<tr>
-                    <td>{$row['id']}</td>
-                    <td>{$row['nombre']}</td>
-                    </tr>";
-            }
             break;
 
 

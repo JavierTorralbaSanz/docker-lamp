@@ -59,7 +59,7 @@ function validar_fecha(fecha) {
 
 function validar_email(email) {
     //Solo formatos de email validos ejemplo@servidor.extension
-    if (!(/^[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*@gmail\.com$/.test(email)))
+    if (!(/^[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)$/.test(email)))
     {
         return false;
     }
