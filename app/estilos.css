@@ -196,6 +196,27 @@ a:hover {
 .user-info-container strong {
     color: #000;
 }
+
+/*Lista Juegos*/
+
+ul {
+    list-style-type: none; /* Quita el estilo de lista predeterminado */
+    padding: 0;
+}
+
+li {
+    margin-bottom: 15px; /* Espaciado entre los elementos de la lista */
+    padding: 10px;
+    border: 1px solid #ccc; /* Bordes alrededor de cada elemento */
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: #f9f9f9; /* Color de fondo */
+}
+
+strong {
+    color: #333; /* Color para los títulos */
+}
+
+
 /* Efectos de enfoque en los inputs */
 input[type="text"]:focus, input[type="password"]:focus {
     border-color: #5c9ded;

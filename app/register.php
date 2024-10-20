@@ -33,8 +33,21 @@
     }
     //Registra al usuario
     if (mysqli_query($conn, "INSERT INTO usuarios(dni, nombre, telefono, fecha, email, username, contraseña) VALUES('$dni', '$nombre', '$telefono', '$fecha', '$email', '$usuario', '$c1')")) {
-        echo 'Usuario registrado<br>';
-        echo '<a href="/">Página inicial</a>';
+        
+        echo '<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Inicio de Sesión</title>
+        <link rel="stylesheet" href="estilos.css">
+    </head>
+    <body>
+        <div class="message-container">
+            
+                 <h1>Usuario registrado</h1>
+                <a href="/" class="link-button">Página inicial</a>
+        </div>
+    </body>';
+       
     }
     else {
         die('error: ' . mysqli_error($conn));

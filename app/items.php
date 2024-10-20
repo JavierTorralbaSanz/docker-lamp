@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Lista de Videojuegos</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Incluye el CSS externo -->
+    <link rel="stylesheet" href="estilos.css"> <!-- Incluye el CSS externo -->
 </head>
 <body>
 
@@ -16,7 +16,7 @@ $query = "SELECT id, titulo, desarrolladora FROM videojuegos";
 $result = $conn->query($query);
 
 if ($result->num_rows > 0) {
-    echo "<h2>Lista de Videojuegos</h2>";
+    echo "<h1>Lista de Videojuegos</h1>";
     echo "<ul>"; // Comienza una lista no ordenada
 
     // Recorre cada videojuego y muestra los datos
@@ -24,9 +24,9 @@ if ($result->num_rows > 0) {
         echo "<li>";
         echo "<strong>Título:</strong> " . ($row['titulo']) . "<br>";  // Muestra el título
         echo "<strong>Desarrolladora:</strong> " . ($row['desarrolladora']) . "<br>";  // Muestra la desarrolladora
-        echo "<a href='/show_item?item=" . ($row['id']) . "'>Ver Detalles</a> | "; // Enlace a detalles
-        echo "<a href='/modify_item?item=" . ($row['id']) . "'>Modificar</a> | "; // Enlace para modificar
-        echo "<a href='/delete_item?item=" . ($row['id']) . "'>Eliminar</a>"; // Enlace para eliminar
+        echo "<a href='/show_item?item=" . ($row['id']) . " ' class='link-button'>Ver Detalles</a> | "; // Enlace a detalles
+        echo "<a href='/modify_item?item=" . ($row['id']) . "' class='link-button' >Modificar</a> | "; // Enlace para modificar
+        echo "<a href='/delete_item?item=" . ($row['id']) . "' class='link-button'>Eliminar</a>"; // Enlace para eliminar
         echo "</li>";
     }
     
