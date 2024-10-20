@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <body class=añadir-juego> 
     <h1>Modificar Juego</h1>
-    <form action="modify_item.php" method="post">
+    <form action="modify_item.php" id="item_modify_form" method="post">
         <input type="hidden" name="id" value="<?php echo $item['id']; ?>">
         
         <label for="titulo">Título:</label>
@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <label for="genero">Género:</label>
         <input type="text" name="genero" id="genero" required><br>
 
-        <input type="submit" value="Modificar">
+        <input type="submit" id="item_modify_submit" value="Modificar">
     </form>
     <a href="/">Volver a la página principal</a>
 </body>
