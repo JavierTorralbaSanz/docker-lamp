@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <body class=añadir-juego>
     <h1>Añadir Juego</h1>
-    <form action="annadir_juego.php" method="post">
+    <form action="annadir_juego.php" id="item_add_form" method="post">
 
 
         <label for="titulo">Título:</label>
@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <label for="genero">Género:</label>
         <input type="text" name="genero" id="genero" required><br>
 
-        <input type="submit" value="Añadir">
+        <input type="submit" id="item_add_submit" value="Añadir">
     </form>
     <a href="/">Volver a la página principal</a>
 </body>
