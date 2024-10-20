@@ -83,7 +83,7 @@
 
             <form name='user_modify_form' id='user_modify_form' action='modify_user.php?user={$usuario}' method='POST'>
                 <label for='name'>Nombre y apellidos:</label><br>
-                <input type='text' id='nombre' name='nombre' value={$row['nombre']} placeholder='Solo se acepta texto'><br>
+                <input type='text' id='nombre' name='nombre' value='" . $row['nombre'] . "' placeholder='Solo se acepta texto'><br>
                 <label for='name'>DNI:</label><br>
                 <input type='text' id='dni' name='dni' value={$row['dni']} placeholder='Formato: 00000000-T'><br>
                 <label for='name'>Teléfono:</label><br>
