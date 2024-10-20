@@ -53,9 +53,9 @@ CREATE TABLE `videojuegos`(
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`dni`, `nombre`, `username`, `contraseña`) VALUES
-  ('12345678-A', 'mikel', 'a', 'a'),
-  ('12345678-B', 'aitor', 'b', 'b');
+INSERT INTO `usuarios` (`dni`, `nombre`, `telefono`, `fecha`, `email`, `username`, `contraseña`) VALUES
+  ('12345678-A', 'mikel', '123456789', '2000-01-01', 'mikel@gmail.com', 'a', 'a'),
+  ('12345678-B', 'aitor', '222444666', '2000-06-01', 'ait@outlook.com', 'b', 'b');
 
 INSERT INTO `videojuegos` (`id`, `titulo`, `desarrolladora`, `rating`, `precio`,`genero`) VALUES
 (1, 'The Legend of Zelda: Breath of the Wild', 'Nintendo', 9.7, 59.99, 'Aventura'),
