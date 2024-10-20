@@ -53,9 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Modificar Juego</title>
+    <link rel="stylesheet" type="text/css" href="estilos.css"> <!--Parte visual en estilos.css-->
 </head>
-<body>
-    <h2>Modificar Juego</h2>
+
+<body class=añadir-juego> 
+    <h1>Modificar Juego</h1>
     <form action="modify_item.php" method="post">
         <input type="hidden" name="id" value="<?php echo $item['id']; ?>">
         

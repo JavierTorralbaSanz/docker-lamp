@@ -26,8 +26,21 @@ if (!$resultado) {
 //Verificar si el usuario existe y la contraseña coincide
 if (mysqli_num_rows($resultado) > 0) {
     $_SESSION['usuario'] = $nombreUsuario;
-    echo "Inicio de sesión exitoso. Bienvenido " . $nombreUsuario . "<br>";
-    echo '<a href="/">Página principal</a>';
+    echo '<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+    <div class="message-container">
+        
+             <h1>Inicio de sesión exitoso. Bienvenido ' . $nombreUsuario . '</h1>
+            <a href="/" class="link-button">Ir a la Página Principal</a>
+    </div>
+</body>';
+    //echo "Inicio de sesión exitoso. Bienvenido " . $nombreUsuario . "<br>";
+    //echo '<a href="/">Página principal</a>';
   //  header("Location: register.php");
     exit; 
 } else {

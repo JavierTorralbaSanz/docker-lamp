@@ -2,17 +2,44 @@
 
     session_start();
 
+    //Este archivo se encargará de gestionar el redireccionamiento a otras partes de la página
     switch (explode("?", $_SERVER['REQUEST_URI'])[0]) {
         case '/':
+            //Zona inicial usuario no indentificado
             if (!isset($_SESSION['usuario'])) {
-                echo '<a href="/register">Registrarse</a><br>';
-                echo '<a href="/login">Login</a><br>';
-                echo '<a href="/add_item">Añadir juego</a><br>';
-                echo '<a href="/items">Ver lista videojuegos</a><br>';
+                    echo '<head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Opciones de la Página</title>
+                        <link rel="stylesheet" href="estilos.css">
+                    </head>
+                    <body>
+                        <div class="container">
+                            
+                               <a href="/register" class="link-button">Registrarse</a><br>
+                               <a href="/login" class="link-button">Login</a><br>
+                               <a href="/add_item" class="link-button">Añadir juego</a><br>
+                               <a href="/items" class="link-button">Ver lista videojuegos</a><br>
+                        </div>
+                    </body>';
+            
             }
             else {
-                echo '<a href="/show_user?user=' . $_SESSION['usuario'] . '">Info usuario</a><br>';
-                echo '<a href="/logout">Cerrar sesión</a><br>';
+                //Usuario ha sido indentificado
+                echo '<head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Opciones de la Página</title>
+                        <link rel="stylesheet" href="estilos.css">
+                    </head>
+                    <body>
+                        <div class="container">
+                            
+                               <a href="/show_user?user=' . $_SESSION['usuario'] . '" class="link-button" >Info usuario</a><br>
+                               <a href="/logout" class="link-button">Cerrar sesión</a><br>
+                        <div>
+                    </body>';
+                
             }
             
             // phpinfo();
@@ -26,6 +53,7 @@
                 die("Database connection failed: " . $conn->connect_error);
             }
 
+            //Se imprime el id y el nombre de los usuarios registrados
             $query = mysqli_query($conn, "SELECT * FROM usuarios")
                 or die (mysqli_error($conn));
 

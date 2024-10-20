@@ -1,4 +1,5 @@
 <?php
+    //Registra en la BD los datos que ha introducido los usuarios
     $nombre = $_POST['nombre'];
     $dni = $_POST['dni'];
     $telefono = $_POST['telefono'];
@@ -30,7 +31,7 @@
         echo "<a href='/'>Página inicial</a>";
         return;
     }
-
+    //Registra al usuario
     if (mysqli_query($conn, "INSERT INTO usuarios(dni, nombre, telefono, fecha, email, username, contraseña) VALUES('$dni', '$nombre', '$telefono', '$fecha', '$email', '$usuario', '$c1')")) {
         echo 'Usuario registrado<br>';
         echo '<a href="/">Página inicial</a>';

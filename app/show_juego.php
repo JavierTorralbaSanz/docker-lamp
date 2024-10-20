@@ -16,6 +16,7 @@
     $item = mysqli_fetch_array($query);
 
     if ($item) {
+        
         echo '<h2>Detalles del Videojuego</h2>';
         echo 'Nombre de usuario: ' . $itemId . '<br>';
         echo 'Título: ' . $item['titulo'] . '<br>';

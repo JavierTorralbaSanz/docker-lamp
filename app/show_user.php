@@ -25,13 +25,25 @@
     $row = mysqli_fetch_array($query);
 
     if ($row) {
-        echo 'Nombre de usuario: ' . $usuario . '<br>';
-        echo 'DNI: ' . $row['dni'] . '<br>';
-        echo 'Nombre: ' . $row['nombre'] . '<br>';
-        echo 'Teléfono: ' . $row['telefono'] . '<br>';
-        echo 'Fecha de nacimiento: ' . $row['fecha'] . '<br>';
-        echo 'Email: ' . $row['email'] . '<br>';
-        echo '<a href="/modify_user?user=' . $usuario . '">Modificar datos</a><br>';
+        echo'<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Información del Usuario</title>
+        <link rel="stylesheet" href="estilos.css">
+        </head>
+        <body>
+            <div class="user-info-container">
+                <h1>Información del Usuario</h1>
+                <?php
+                    <p><strong>Nombre de usuario:</strong> ' . $usuario . '</p>
+                    <p><strong>DNI:</strong> ' . $row['dni'] . '</p>
+                    <p><strong>Nombre:</strong> ' . $row['nombre'] . '</p>
+                    <p><strong>Teléfono:</strong> ' . $row['telefono'] . '</p>
+                    <p><strong>Fecha de nacimiento:</strong> ' . $row['fecha'] . '</p>
+                    <p><strong>Email:</strong> ' . $row['email'] . '</p>
+                    <a href="/modify_user?user=' . $usuario . '" class="link-button">Modificar datos</a>
+            </div>
+        </body>';
     }
     else {
         echo 'No existe ningún usuario con DNI \'' . $usuario . '\'<br>';

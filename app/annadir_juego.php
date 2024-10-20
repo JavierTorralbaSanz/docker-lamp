@@ -1,12 +1,14 @@
 <?php
 include 'config.php';
 
+// Comprueba si el usuario ha agragado todos los datos del videojuego
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($_POST['titulo']) || empty($_POST['desarrolladora']) || empty($_POST['rating']) || empty($_POST['precio'])) {
         echo "Todos los campos son obligatorios.";
         exit();
     }
 
+    //Se añade en la base de datos el videojuego
     $titulo = $_POST['titulo'];
     $desarrolladora = $_POST['desarrolladora'];
     $rating = (float)$_POST['rating'];
@@ -16,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $query = "INSERT INTO videojuegos (titulo, desarrolladora, rating, precio, genero)
         VALUES ('$titulo', '$desarrolladora', '$rating', '$precio', '$genero')";
 
+    //Si el videojuefo se ha añadido se redirige a la página
     if ($conn->query($query) === TRUE) {
         header("Location: /?message=Juego%20añadido%20exitosamente");
         exit();
@@ -31,10 +34,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Añadir Juego</title>
+    <link rel="stylesheet" type="text/css" href="estilos.css"> <!--Parte visual en estilos.css-->
 </head>
-<head>
-        <link rel="stylesheet" type="text/css" href="estilos.css"> <!--Parte visual en estilos.css-->
-</head>
+
 <body class=añadir-juego>
     <h1>Añadir Juego</h1>
     <form action="annadir_juego.php" method="post">

@@ -1,5 +1,5 @@
 <?php
-
+    //If valido cuando se entra por primera vez
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         parse_str($_SERVER['QUERY_STRING'], $params);
 
@@ -16,21 +16,29 @@
         $password = "test";
         $db = "database";
 
+        //Se realiza la conexión
         $conn = mysqli_connect($hostname,$username,$password,$db);
         if ($conn->connect_error) {
             die("Database connection failed: " . $conn->connect_error);
         }
 
+        //Busca al usuario
         $query = mysqli_query($conn, "SELECT * FROM usuarios WHERE username = '$usuario'")
             or die (mysqli_error($conn));
 
         $row = mysqli_fetch_array($query);
 
+        //Si existe el usuario muestra la interfaz para que el usuario pueda cambiar los valores
         if ($row) {
 
             echo "
-            <script src='validacion.js'> </script>
-            <script>
+
+                <head>
+                    <link rel='stylesheet' type='text/css' href='estilos.css'> <!--Parte visual en estilos.css-->
+                </head> 
+                <body class='register-page'>
+                <script src='validacion.js'> </script>
+                <script>
                 function validar_datos() {
                     var nombre = document.getElementById('nombre').value;
                     var dni = document.getElementById('dni').value;
@@ -89,10 +97,11 @@
                 <label id='c2'>Repetir contraseña:</label><br>
                 <input type='password' id='password2' name='password2'><br>
                 <input type='button' value='Submit' id='user_modify_submit' onclick='validar_datos()'>
-            </form>";
+            </form>
+            </body>";
         }
     }
-
+    // Una vez introducidos los datos del usuario a modifivar accede a este if
     else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $nombre = $_POST['nombre'];
         $dni = $_POST['dni'];
@@ -116,6 +125,7 @@
             die("Database connection failed: " . $conn->connect_error);
         }
 
+        //Se modifican los valores  por los introducidos por el usuario
         $query = mysqli_query($conn,
             "UPDATE usuarios SET nombre = '$usuario', dni = '$dni', telefono='$telefono',
             fecha = '$fecha', email = '$email'
@@ -123,13 +133,23 @@
         ")
             or die (mysqli_error($conn));
 
-        
+        // Comprueba si se ha decido cambiar la contraseña o no
         if (strlen($c1) > 0) {
             $query = mysqli_query($conn, "UPDATE usuarios SET contraseña = '$c1' WHERE username = '$usuario'") or die (mysqli_error($conn));
         }
-
-        echo 'Datos actualizados<br>';
-        echo '<a href="/">Página principal</a>';
+        echo '<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Inicio de Sesión</title>
+        <link rel="stylesheet" href="estilos.css">
+    </head>
+    <body>
+        <div class="message-container">
+            
+                 <h1>Datos actualizados</h1>
+                <a href="/" class="link-button">Ir a la Página Principal</a>
+        </div>
+    </body>';
 
     }
 
