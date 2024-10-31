@@ -3,6 +3,8 @@ services:
    image: web
    environment:
      - ALLOW_OVERRIDE=true
+   env_file:
+     - .env
    ports:
      - "81:80"
    links:

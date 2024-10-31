@@ -1,4 +1,16 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
 <?php
+
+    include "config.php";
+
     //Registra en la BD los datos que ha introducido los usuarios
     $nombre = $_POST['nombre'];
     $dni = $_POST['dni'];
@@ -10,15 +22,14 @@
     $c1 = $_POST['password1'];
     $c2 = $_POST['password2'];
 
-    $hostname = "db";
-    $username = "admin";
-    $password = "test";
-    $db = "database";
+    $consulta = $conn->prepare("SELECT * FROM usuarios WHERE DNI=?");
+    $consulta->bind_param("s", $dni);
+    $consulta->execute();
+    $resultado = $consulta->get_result();
+    $consulta->close();
 
-    $conn = mysqli_connect($hostname,$username,$password,$db);
-    if ($conn->connect_error) {
-        die("Database connection failed: " . $conn->connect_error);
-    }
+    echo "AAA: " . $resultado->num_rows . '/n';
+
 
     if (mysqli_query($conn, "SELECT * FROM usuarios WHERE DNI='$dni'")->num_rows != 0) {
         echo "Ya existe un usuario con DNI $dni<br>";
@@ -53,3 +64,7 @@
         die('error: ' . mysqli_error($conn));
     }
 ?>
+
+
+</body>
+</html>
