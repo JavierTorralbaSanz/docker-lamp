@@ -1,4 +1,6 @@
 <?php
+
+    include 'caducidad_sesion.php';
     parse_str($_SERVER['QUERY_STRING'], $params);
 
     if (!$params) {

@@ -1,7 +1,6 @@
 <?php
 
     session_start();
-
     //Este archivo se encargará de gestionar el redireccionamiento a otras partes de la página
     switch (explode("?", $_SERVER['REQUEST_URI'])[0]) {
         case '/':

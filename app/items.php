@@ -9,6 +9,7 @@
 
 
 <?php
+include 'caducidad_sesion.php';
 include 'config.php'; // Asegúrate de incluir tu configuración de base de datos
 
 // Consulta para obtener todos los videojuegos

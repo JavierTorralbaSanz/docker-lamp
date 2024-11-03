@@ -1,4 +1,5 @@
 <?php
+    include 'caducidad_sesion.php';
     //If valido cuando se entra por primera vez
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         parse_str($_SERVER['QUERY_STRING'], $params);

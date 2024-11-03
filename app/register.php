@@ -10,7 +10,7 @@
 <?php
 
     include "config.php";
-
+    include 'caducidad_sesion.php';
     //Registra en la BD los datos que ha introducido los usuarios
     $nombre = $_POST['nombre'];
     $dni = $_POST['dni'];

@@ -1,6 +1,6 @@
 <?php
 include 'config.php';
-
+include 'caducidad_sesion.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($_POST['id']) || empty($_POST['titulo']) || empty($_POST['desarrolladora']) || empty($_POST['rating'])
             || empty($_POST['precio']) || empty($_POST['genero'])) {

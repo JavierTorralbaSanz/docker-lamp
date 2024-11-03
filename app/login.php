@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+include 'caducidad_sesion.php';
     //Obtener datos del usuario
     $nombreUsuario = $_POST['nombre'];
     $contraseña = $_POST['contraseña'];
