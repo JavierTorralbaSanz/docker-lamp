@@ -1,55 +1,13 @@
 <!DOCTYPE html>
 <html>
-        <!--Este archivo incluye la interacción del proceso de registrarse por parte del usuario-->
+    <!--Este archivo incluye la interacción del proceso de registrarse por parte del usuario-->
 
     <head>
         <link rel="stylesheet" type="text/css" href="estilos.css"> <!--Parte visual en estilos.css-->
+        <title>Registro de usuario</title>
     </head> 
     <body class="register-page">
         <h1>Registro de usuario</h1>
-        <script src="validacion.js"> </script> <!--Comprobar datos introducidos con validacion.js-->
-
-        <script>
-            //Funciones de Javascript para notificar errores de datos introducidos por el usuario 
-            function validar_datos() {
-                var nombre = document.getElementById('nombre').value;
-                var dni = document.getElementById('dni').value;
-                var telefono = document.getElementById('telefono').value;
-                var fecha = document.getElementById('fecha').value;
-                var email = document.getElementById('email').value;
-                var c1 = document.getElementById('password1').value;
-                var c2 = document.getElementById('password2').value;
-                
-                if (!validar_nombre(nombre)) {
-                    alert('Nombre de usuario inválido');
-                    return;
-                }
-                if (!validar_dni(dni)) {
-                    alert('DNI inválido. Formato: 12345678-A');
-                    return;
-                }
-                if (!validar_telefono(telefono)) {
-                    alert('Teléfono inválido. Formato: 123456789');
-                    return;
-                }
-                if (!validar_fecha(fecha)) {
-                    alert('Fecha inválida. Formato: yyyy-mm-dd');
-                    return;
-                }
-                if (!validar_email(email)) {
-                    alert('Email inválido');
-                    return;
-                }
-
-                if (!validar_passwords(c1, c2)) {
-                    alert('Contraseña inválida. Las contraseñas deben coincidir y no ser nulas');
-                    return;
-                }
-            
-                // todo ok
-                document.register_form.submit();
-            }
-        </script>
 
         <!--Formulario que indica los datos que debe de introducir el usuario-->
         <form name="register_form" id="register_form" action="register.php" method="POST">
@@ -69,7 +27,7 @@
             <input type="password" id="password1" name="password1"><br>
             <label id="c2">Repetir contraseña:</label><br>
             <input type="password" id="password2" name="password2"><br>
-            <input type="button" value="Submit" id="register_submit" onclick="validar_datos()">
+            <input type="submit" value="Submit" id="register_submit">
         </form>
         <!--Los datos introducidos correctos se almacenan en la sql a traves de register.php-->
 
