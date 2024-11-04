@@ -1,7 +1,6 @@
 <?php
 
 session_start();
-include 'caducidad_sesion.php';
     //Obtener datos del usuario
     $nombreUsuario = $_POST['nombre'];
     $contraseña = $_POST['contraseña'];
@@ -24,22 +23,34 @@ if (!$resultado) {
     die("Error en la consulta: " . mysqli_error($conn));
 }
 
-//Verificar si el usuario existe y la contraseña coincide
-if (mysqli_num_rows($resultado) > 0) {
+
+// Preparar la consulta SQL para evitar inyecciones
+$sql = "SELECT contraseña FROM usuarios WHERE username = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $nombreUsuario); // "s" indica que es una cadena de texto
+$stmt->execute();
+$resultado = $stmt->get_result();
+
+// Verificar si el usuario existe y la contraseña coincide
+if ($resultado->num_rows > 0) {
+    //Para realizar esto primero se debería de encriptar las claves
+    //$row = $resultado->fetch_assoc();
+    // if (password_verify($contraseña, $row['contraseña'])) {} 
+    // Suponiendo que las contraseñas es
     $_SESSION['usuario'] = $nombreUsuario;
     echo '<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio de Sesión</title>
     <link rel="stylesheet" href="estilos.css">
-</head>
-<body>
+    </head>
+    <body>
     <div class="message-container">
         
-             <h1>Inicio de sesión exitoso. Bienvenido ' . $nombreUsuario . '</h1>
+             <h1>Inicio de sesión exitoso. Bienvenido ' . htmlspecialchars($nombreUsuario) . '</h1>
             <a href="/" class="link-button">Ir a la Página Principal</a>
     </div>
-</body>';
+    </body>';
     //echo "Inicio de sesión exitoso. Bienvenido " . $nombreUsuario . "<br>";
     //echo '<a href="/">Página principal</a>';
   //  header("Location: register.php");

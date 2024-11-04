@@ -15,18 +15,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $precio = (float)$_POST['precio'];
     $genero = $_POST['genero'];
 
-    $query = "INSERT INTO videojuegos (titulo, desarrolladora, rating, precio, genero)
-        VALUES ('$titulo', '$desarrolladora', '$rating', '$precio', '$genero')";
+    // Preparar la consulta para evitar inyección SQL
+    $stmt = $conn->prepare("INSERT INTO videojuegos (titulo, desarrolladora, rating, precio, genero) VALUES (?, ?, ?, ?, ?)");
+    
+    if ($stmt) {
+        // Vincular los parámetros
+        $stmt->bind_param("ssdds", $titulo, $desarrolladora, $rating, $precio, $genero);
 
-    //Si el videojuefo se ha añadido se redirige a la página
-    if ($conn->query($query) === TRUE) {
-        header("Location: /?message=Juego%20añadido%20exitosamente");
-        exit();
+        // Ejecutar la consulta
+        if ($stmt->execute()) {
+            header("Location: /?message=Juego%20añadido%20exitosamente");
+            exit();
+        } else {
+            echo "Error: " . $stmt->error;
+        }
+
+        // Cerrar la declaración
+        $stmt->close();
     } else {
-        echo "Error: " . $conn->error;
+        echo "Error al preparar la consulta: " . $conn->error;
     }
 
+    // Cerrar la conexión
     $conn->close();
+
 } else {
 ?>
 <!DOCTYPE html>

@@ -23,11 +23,17 @@
             die("Database connection failed: " . $conn->connect_error);
         }
 
-        //Busca al usuario
-        $query = mysqli_query($conn, "SELECT * FROM usuarios WHERE username = '$usuario'")
-            or die (mysqli_error($conn));
-
-        $row = mysqli_fetch_array($query);
+         // Consulta parametrizada para buscar al usuario
+        $stmt = $conn->prepare("SELECT * FROM usuarios WHERE username = ?");
+        if (!$stmt) {
+            echo "Error preparando la consulta: " . $conn->error;
+            exit();
+        }
+        $stmt->bind_param("s", $usuario);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $stmt->close();
 
         //Si existe el usuario muestra la interfaz para que el usuario pueda cambiar los valores
         if ($row) {
@@ -84,15 +90,15 @@
 
             <form name='user_modify_form' id='user_modify_form' action='modify_user.php?user={$usuario}' method='POST'>
                 <label for='name'>Nombre y apellidos:</label><br>
-                <input type='text' id='nombre' name='nombre' value='" . $row['nombre'] . "' placeholder='Solo se acepta texto'><br>
+                <input type='text' id='nombre' name='nombre' value='" . htmlspecialchars($row['nombre']) . "' placeholder='Solo se acepta texto'><br>
                 <label for='name'>DNI:</label><br>
-                <input type='text' id='dni' name='dni' value={$row['dni']} placeholder='Formato: 00000000-T'><br>
+                <input type='text' id='dni' name='dni' value='" . htmlspecialchars($row['dni']) . "'placeholder='Formato: 00000000-T'><br>
                 <label for='name'>Teléfono:</label><br>
-                <input type='text' id='telefono' name='telefono' value={$row['telefono']} placeholder='Formato: 123456789'><br>
+                <input type='text' id='telefono' name='telefono' value='" . htmlspecialchars($row['telefono']) . "'placeholder='Formato: 123456789'><br>
                 <label for='name'>Fecha de nacimiento:</label><br>
-                <input type='text' id='fecha' name='fecha' value={$row['fecha']} placeholder='Formato: aaaa-mm-dd'><br>
+                <input type='text' id='fecha' name='fecha' value='" . htmlspecialchars($row['fecha']) . "' placeholder='Formato: aaaa-mm-dd'><br>
                 <label for='name'>Email:</label><br>
-                <input type='text' id='email' name='email' value={$row['email']} placeholder='Formato: nombre@dominio'><br>
+                <input type='text' id='email' name='email' value='" . htmlspecialchars($row['email']) . "' placeholder='Formato: nombre@dominio'><br>
                 <label id='c1'>Contraseña (vacía si no quiere cambiarla):</label><br>
                 <input type='password' id='password1' name='password1'><br>
                 <label id='c2'>Repetir contraseña:</label><br>
@@ -126,17 +132,29 @@
             die("Database connection failed: " . $conn->connect_error);
         }
 
-        //Se modifican los valores  por los introducidos por el usuario
-        $query = mysqli_query($conn,
-            "UPDATE usuarios SET nombre = '$usuario', dni = '$dni', telefono='$telefono',
-            fecha = '$fecha', email = '$email'
-            WHERE username = '$usuario'
-        ")
-            or die (mysqli_error($conn));
+        $stmt = $conn->prepare("UPDATE usuarios SET nombre = ?, dni = ?, telefono = ?, fecha = ?, email = ? WHERE username = ?");
+        if (!$stmt) {
+            echo "Error preparando la consulta: " . $conn->error;
+            exit();
+        }
+        $stmt->bind_param("ssssss", $nombre, $dni, $telefono, $fecha, $email, $usuario);
+        if (!$stmt->execute()) {
+            echo "Error al actualizar los datos: " . $stmt->error;
+        }
+        $stmt->close();
 
         // Comprueba si se ha decido cambiar la contraseña o no
         if (strlen($c1) > 0) {
-            $query = mysqli_query($conn, "UPDATE usuarios SET contraseña = '$c1' WHERE username = '$usuario'") or die (mysqli_error($conn));
+                $stmt = $conn->prepare("UPDATE usuarios SET contraseña = ? WHERE username = ?");
+                if (!$stmt) {
+                    echo "Error preparando la consulta de contraseña: " . $conn->error;
+                    exit();
+                }
+                $stmt->bind_param("ss", $c1, $usuario);
+                if (!$stmt->execute()) {
+                    echo "Error al actualizar la contraseña: " . $stmt->error;
+                }
+                $stmt->close();
         }
         echo '<head>
         <meta charset="UTF-8">

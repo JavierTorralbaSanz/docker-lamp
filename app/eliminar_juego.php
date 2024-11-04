@@ -14,23 +14,39 @@
         //Se busca el videojuego y se elimina, mostrando un aviso al usuario
         $itemId = $params['item'];
         include 'config.php';
-        $query = mysqli_query($conn, "DELETE FROM videojuegos WHERE id = '$itemId'")
-            or die(mysqli_error($conn));
+
+       // Prepara y ejecuta la consulta segura para eliminar el videojuego
+        $itemId = $params['item'];
+        $stmt = $conn->prepare("DELETE FROM videojuegos WHERE id = ?");
+
+        if ($stmt) {
+            $stmt->bind_param("i", $itemId); // "i" indica que $itemId es un entero
     
-            echo '<head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Inicio de Sesión</title>
-            <link rel="stylesheet" href="estilos.css">
-        </head>
-        <body>
-            <div class="message-container">
-                
-                     <h1>El videojuego seleccionado se ha eliminado correctamente </h1>
-                    <a href="/items" class="link-button">Ir a mostrar juegos</a>
-            </div>
-        </body>';
-    
+            if ($stmt->execute()) 
+            {
+                    echo '<head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Inicio de Sesión</title>
+                    <link rel="stylesheet" href="estilos.css">
+                </head>
+                <body>
+                    <div class="message-container">
+                        
+                            <h1>El videojuego seleccionado se ha eliminado correctamente </h1>
+                            <a href="/items" class="link-button">Ir a mostrar juegos</a>
+                    </div>
+                </body>';
+            }
+            else {
+                echo "Error al eliminar el videojuego: " . $stmt->error;
+            }
+            $stmt->close();
+        }
+        else {
+            echo "Error al preparar la consulta de eliminación: " . $conn->error;
+        }
+        $conn->close();
     }
 
     else {
@@ -43,8 +59,8 @@
             </head>
             <body>
                 <div class="message-container">
-                        <p>Está a punto de eliminar ' . $params['item'] . '. ¿Seguro que quiere continuar?</p>
-                        <form action="delete_item?item=' . $params['item'] . '" method="post">
+                        <p>Está a punto de eliminar ' . htmlspecialchars($params['item']) .  '. ¿Seguro que quiere continuar?</p>
+                        <form action="delete_item?item=' . urlencode($params['item']) .'" method="post">
                         <input type="submit" id="item_delete_submit" value="Eliminar juego">
                         </form>
                 </div>
