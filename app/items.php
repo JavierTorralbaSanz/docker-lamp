@@ -23,11 +23,11 @@ if ($result->num_rows > 0) {
     // Recorre cada videojuego y muestra los datos
     while ($row = $result->fetch_assoc()) {
         echo "<li>";
-        echo "<strong>Título:</strong> " . ($row['titulo']) . "<br>";  // Muestra el título
-        echo "<strong>Desarrolladora:</strong> " . ($row['desarrolladora']) . "<br>";  // Muestra la desarrolladora
-        echo "<a href='/show_item?item=" . ($row['id']) . " ' class='link-button'>Ver Detalles</a> | "; // Enlace a detalles
-        echo "<a href='/modify_item?item=" . ($row['id']) . "' class='link-button' >Modificar</a> | "; // Enlace para modificar
-        echo "<a href='/delete_item?item=" . ($row['id']) . "' class='link-button'>Eliminar</a>"; // Enlace para eliminar
+        echo "<strong>Título:</strong> " . htmlspecialchars($row['titulo']) . "<br>";  // Muestra el título
+        echo "<strong>Desarrolladora:</strong> " . htmlspecialchars($row['desarrolladora']) . "<br>";  // Muestra la desarrolladora
+        echo "<a href='/show_item?item=" . htmlspecialchars($row['id']) . " ' class='link-button'>Ver Detalles</a> | "; // Enlace a detalles
+        echo "<a href='/modify_item?item=" . htmlspecialchars($row['id']) . "' class='link-button' >Modificar</a> | "; // Enlace para modificar
+        echo "<a href='/delete_item?item=" . htmlspecialchars($row['id']) . "' class='link-button'>Eliminar</a>"; // Enlace para eliminar
         echo "</li>";
     }
     
