@@ -23,6 +23,10 @@
     $c1 = $_POST['password1'];
     $c2 = $_POST['password2'];
 
+    // Generar hash seguro de la contraseña, en PHP la funcion 
+    // password_hash genera automaticamente un salt y realiza el hash
+    $hashed_password = password_hash($c1, PASSWORD_DEFAULT);
+
     if (!validar_dni($dni)) {
         echo "<div class='message-container'>";
         echo "El DNI es inválido<br>";
@@ -88,7 +92,7 @@
     }
 
     $consulta = $conn->prepare("SELECT * FROM usuarios WHERE username=?");
-    $consulta->bind_param("s", $usuario);
+    $consulta->bind_param("s", $username);
     $consulta->execute();
     $resultado = $consulta->get_result();
     $consulta->close();
@@ -100,12 +104,12 @@
         echo "</div>";
         return;
     }
-
+    //En esta consulta se ha introducido el hased_password que ya implementa el salt y hash
     $consulta = $conn->prepare("
         INSERT INTO usuarios(dni, nombre, telefono, fecha, email, username, contraseña)
         VALUES(?, ?, ?, ?, ?, ?, ?)
     ");
-    $consulta->bind_param("sssssss", $dni, $nombre, $telefono, $fecha, $email, $username, $c1);
+    $consulta->bind_param("sssssss", $dni, $nombre, $telefono, $fecha, $email, $username, $hashed_password);
     
 
     //Registra al usuario

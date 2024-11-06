@@ -59,55 +59,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Database connection failed: " . $conn->connect_error);
     }
 
-// Busca  en la sql si algún usuario tiene ese nombre y esa contraseña
-$sql = "SELECT * FROM usuarios WHERE username = '$nombreUsuario' AND contraseña = '$contraseña'";
-$resultado = $conn->query($sql);
-if (!$resultado) {
-    die("Error en la consulta: " . mysqli_error($conn));
-}
+ //Preparar la consulta para obtener el hash de la contraseña
+ $sql = "SELECT contraseña FROM usuarios WHERE username = ?";
+ $stmt = $conn->prepare($sql);
+ $stmt->bind_param("s", $nombreUsuario);
+ $stmt->execute();
+ $resultado = $stmt->get_result();
 
+ if ($resultado->num_rows > 0 && $codigoGuardado == $codigoIngresado && $calculoIngresado == (string)$calGuardado) {
+     $row = $resultado->fetch_assoc();
+     
+     //Usar password_verify para comparar la contraseña ingresada con el hash
+     if (password_verify($contraseña, $row['contraseña'])) {
+         $_SESSION['usuario'] = $nombreUsuario;
+         echo '<head>
+             <meta charset="UTF-8">
+             <meta name="viewport" content="width=device-width, initial-scale=1.0">
+             <title>Inicio de Sesión</title>
+             <link rel="stylesheet" href="estilos.css">
+             </head>
+             <body>
+             <div class="message-container">
+                 <h1>Inicio de sesión exitoso. Bienvenido ' . htmlspecialchars($nombreUsuario) . '</h1>
+                 <a href="/" class="link-button">Ir a la Página Principal</a>
+             </div>
+             </body>';
 
-// Preparar la consulta SQL para evitar inyecciones
-$sql = "SELECT contraseña FROM usuarios WHERE username = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $nombreUsuario); // "s" indica que es una cadena de texto
-$stmt->execute();
-$resultado = $stmt->get_result();
-// Verificar si el usuario existe y la contraseña coincide
-if ($resultado->num_rows > 0 && $codigoGuardado==$codigoIngresado && $calculoIngresado==(string)$calGuardado) {
-    //Para realizar esto primero se debería de encriptar las claves
-    //$row = $resultado->fetch_assoc();
-    // if (password_verify($contraseña, $row['contraseña'])) {} 
-    // Suponiendo que las contraseñas es
-    $_SESSION['usuario'] = $nombreUsuario;
-    echo '<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio de Sesión</title>
-    <link rel="stylesheet" href="estilos.css">
-    </head>
-    <body>
-    <div class="message-container">
-        
-             <h1>Inicio de sesión exitoso. Bienvenido ' . htmlspecialchars($nombreUsuario) . '</h1>
-            <a href="/" class="link-button">Ir a la Página Principal</a>
-    </div>
-    </body>';
-    //echo "Inicio de sesión exitoso. Bienvenido " . $nombreUsuario . "<br>";
-    //echo '<a href="/">Página principal</a>';
-  //  header("Location: register.php");
     unset($_SESSION['cod_veri']);
     unset($_SESSION['texto_cal']);
     unset($_SESSION['calculo']);
     exit; 
 } else {
     echo "Error: Nombre de usuario o contraseña incorrectos.";
+}
+
     unset($_SESSION['cod_veri']);
     unset($_SESSION['texto_cal']);
     unset($_SESSION['calculo']);
+    $stmt->close();
+    $conn->close();
+}
+}
 
-}
-}
 if (!isset($_SESSION['cod_veri'])) {
     $_SESSION['cod_veri'] = generarCodAleatorio();
 }
@@ -116,7 +109,12 @@ $codMate=generarCodMate();
 $_SESSION['calculo']=$codMate['calculo'];
 $_SESSION['texto_cal']=$codMate['texto_cal'];
 }
-echo'<!DOCTYPE html>
+
+
+?>
+
+
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -148,12 +146,12 @@ echo'<!DOCTYPE html>
 
         <!-- Campos de verificación y cálculo, inicialmente ocultos -->
         <div id="campos_verificacion" style="display:none;">
-            <label>Código de verificación: <strong>' . htmlspecialchars($_SESSION['cod_veri']) . '</strong></label><br>
+            <label>Código de verificación: <strong><?php echo htmlspecialchars($_SESSION['cod_veri']);?></strong></label><br>
 
             <label for="codigo_ingresado">Ingresa Código:</label>
             <input type="text" id="codigo_ingresado" name="codigo_ingresado" required><br><br>
 
-            <label>Cálcula esta ecuación: <strong>' . htmlspecialchars($_SESSION['texto_cal']) . '</strong></label><br>
+            <label>Cálcula esta ecuación: <strong><?php echo htmlspecialchars($_SESSION['texto_cal']);?></strong></label><br>
 
             <label for="cal_ingresado">Ingresa Código:</label>
             <input type="number" id="cal_ingresado" name="cal_ingresado" required><br><br>
@@ -163,6 +161,4 @@ echo'<!DOCTYPE html>
     </form>
 
 </body>
-</html>'
-
-?>
+</html>

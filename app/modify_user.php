@@ -121,6 +121,10 @@
         $c1 = $_POST['password1'];
         $c2 = $_POST['password2'];
 
+        // Generar hash seguro de la contraseña, en PHP la funcion 
+        // password_hash genera automaticamente un salt y realiza el hash
+        $hashed_password = password_hash($c1, PASSWORD_DEFAULT);
+
         // query
         $hostname = "db";
         $username = "admin";
@@ -150,7 +154,7 @@
                     echo "Error preparando la consulta de contraseña: " . $conn->error;
                     exit();
                 }
-                $stmt->bind_param("ss", $c1, $usuario);
+                $stmt->bind_param("ss", $hashed_password, $usuario);
                 if (!$stmt->execute()) {
                     echo "Error al actualizar la contraseña: " . $stmt->error;
                 }
