@@ -51,7 +51,7 @@
             break;
 
         case '/login':
-            require 'login.html';
+            require 'login.php';
             break;
         
         case '/show_user':

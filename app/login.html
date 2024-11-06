@@ -8,13 +8,17 @@
     <body class="login-page">
 
         <h1>Iniciar Sesión</h1>
-
+        
    <form name="login_form" id="login_form" action="login.php" method="POST"> 
     <!--Es el formulario mediante el cual se le pide el usuario inicia sesión-->
     <label for="nombre">Nombre de usuario:</label>
     <input type="text" id="nombre" name="nombre" required><br>
     <label for="contraseña">Contraseña:</label>
     <input type="password" id="contraseña" name="contraseña" required><br>
+
+    <p>Código de verificación: <strong><?php echo $_SESSION['codigo_verificacion']; ?></strong></p>
+    <label for="codigo_ingresado">Código de verificación:</label>
+    <input type="text" id="codigo_ingresado" name="codigo_ingresado" required><br>
 
     <input type="submit" id="login_submit" value="Iniciar Sesión">
     <!--Una vez pulsado el botón de submit los datos introducidos irán a login.php-->
