@@ -18,6 +18,34 @@ h1 {
     font-weight: bold;
 }
 
+/* Estilo básico del botón */
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #28a745; /* Color de fondo verde */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    text-align: center;
+    text-decoration: none;
+}
+
+/* Efecto hover (al pasar el cursor) */
+.button:hover {
+    background-color: #218838; /* Color verde más oscuro al pasar el cursor */
+}
+
+/* Efecto active (al hacer clic) */
+.button:active {
+    transform: scale(0.98);
+    background-color: #1e7e34; /* Color verde aún más oscuro cuando el botón está presionado */
+}
+
+
 /* Diseño para la página de inicio de sesión */
 
 

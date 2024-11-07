@@ -142,7 +142,7 @@ $_SESSION['texto_cal']=$codMate['texto_cal'];
         <input type="password" id="contraseña" name="contraseña" required><br>
 
         <!-- Botón para mostrar los campos de verificación -->
-        <button type="button" id="boton_verificacion" onclick="mostrarCampos()">¿Soy un bot?</button><br><br>
+        <button type="button" class="button" id="boton_verificacion" onclick="mostrarCampos()">¿Soy un bot?</button><br><br>
 
         <!-- Campos de verificación y cálculo, inicialmente ocultos -->
         <div id="campos_verificacion" style="display:none;">

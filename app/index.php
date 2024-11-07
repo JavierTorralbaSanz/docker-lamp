@@ -47,7 +47,7 @@
 
 
         case '/register':
-            require 'register.html';
+            require 'register.php';
             break;
 
         case '/login':
