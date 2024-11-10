@@ -1,4 +1,5 @@
 <?php
+    session_start();
     parse_str($_SERVER['QUERY_STRING'], $params);
 
     if (!isset($params['item'])) {
@@ -9,7 +10,7 @@
 
     $itemId = $params['item'];
 
-    include 'caducidad_sesion.php';
+  
     include 'config.php';
     $query = mysqli_query($conn, "SELECT * FROM videojuegos WHERE id = '$itemId'")
         or die(mysqli_error($conn));
@@ -17,13 +18,23 @@
     $item = mysqli_fetch_array($query);
 
     if ($item) {
-        echo'<head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Información del Usuario</title>
-        <link rel="stylesheet" href="estilos.css">
-        </head>
-        <body>
+        if (!isset($_SESSION['usuario'])) {
+            echo'<head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Información del Juego</title>
+            <link rel="stylesheet" href="estilos.css">
+            </head>';
+        } else{
+            echo'<head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Información del Usuario</title>
+            <link rel="stylesheet" href="estilos.css">
+            <script src="inactividad.js"></script>
+            </head>';
+        }
+        echo '<body>
             <div class="user-info-container">
                 <h1>Detalles del Videojuego</h1>
                 <?php

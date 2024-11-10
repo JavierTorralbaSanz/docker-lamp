@@ -1,6 +1,5 @@
 <?php
 include 'config.php';
-include 'caducidad_sesion.php';
 // Comprueba si el usuario ha agragado todos los datos del videojuego
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($_POST['titulo']) || empty($_POST['desarrolladora']) || empty($_POST['rating']) || empty($_POST['precio'])) {
@@ -47,6 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <title>Añadir Juego</title>
     <link rel="stylesheet" type="text/css" href="estilos.css"> <!--Parte visual en estilos.css-->
+    <?php if (isset($_SESSION['usuario'])): ?>
+    <script src="inactividad.js"></script>
+    <?php endif; ?>
+
 </head>
 
 <body class=añadir-juego>

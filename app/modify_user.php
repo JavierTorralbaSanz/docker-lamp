@@ -1,5 +1,5 @@
 <?php
-    include 'caducidad_sesion.php';
+
     //If valido cuando se entra por primera vez
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         parse_str($_SERVER['QUERY_STRING'], $params);
@@ -38,13 +38,12 @@
         //Si existe el usuario muestra la interfaz para que el usuario pueda cambiar los valores
         if ($row) {
 
-            echo "
-
-                <head>
+                echo "<head>
                     <link rel='stylesheet' type='text/css' href='estilos.css'> <!--Parte visual en estilos.css-->
-                </head> 
-                <body class='register-page'>
-                <script src='validacion.js'> </script>
+                    <script src='inactividad.js'></script>
+                </head>";
+
+                echo "<body class='register-page'>
                 <script>
                 function validar_datos() {
                     var nombre = document.getElementById('nombre').value;

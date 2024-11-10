@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <title>Lista de Videojuegos</title>
     <link rel="stylesheet" href="estilos.css"> <!-- Incluye el CSS externo -->
+    <?php if (isset($_SESSION['usuario'])): ?>
+    <script src="inactividad.js"></script>
+    <?php endif; ?>
 </head>
 <body>
 
 
 <?php
-include 'caducidad_sesion.php';
 include 'config.php'; // Asegúrate de incluir tu configuración de base de datos
 
 // Consulta para obtener todos los videojuegos

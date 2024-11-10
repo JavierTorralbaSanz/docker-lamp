@@ -1,6 +1,5 @@
 <?php
 include 'config.php';
-include 'caducidad_sesion.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Validación de campos
@@ -82,6 +81,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <title>Modificar Juego</title>
     <link rel="stylesheet" type="text/css" href="estilos.css">
+    <?php if (isset($_SESSION['usuario'])): ?>
+    <script src="inactividad.js"></script>
+    <?php endif; ?>
 </head>
 
 <body class="añadir-juego">

@@ -30,8 +30,9 @@
                         <meta name="viewport" content="width=device-width, initial-scale=1.0">
                         <title>Opciones de la Página</title>
                         <link rel="stylesheet" href="estilos.css">
-                    </head>
-                    <body>
+                        <script src="inactividad.js"></script>
+                    </head>';
+                    echo '<body>
                         <div class="container">
                             
                                <a href="/show_user?user=' . $_SESSION['usuario'] . '" class="link-button" >Info usuario</a><br>

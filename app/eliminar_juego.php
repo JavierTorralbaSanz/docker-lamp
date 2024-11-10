@@ -1,5 +1,5 @@
 <?php
-    include 'caducidad_sesion.php';
+    
     parse_str($_SERVER['QUERY_STRING'], $params);
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -29,6 +29,9 @@
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <title>Inicio de Sesión</title>
                     <link rel="stylesheet" href="estilos.css">
+                    <?php if (isset($_SESSION["usuario"])): ?>
+                    <script src="inactividad.js"></script>
+                    <?php endif; ?>
                 </head>
                 <body>
                     <div class="message-container">

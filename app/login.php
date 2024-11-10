@@ -85,12 +85,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
              </div>
              </body>';
 
-    unset($_SESSION['cod_veri']);
-    unset($_SESSION['texto_cal']);
-    unset($_SESSION['calculo']);
     exit; 
-} else {
+} elseif($resultado->num_rows <=0 ){
     echo "Error: Nombre de usuario o contraseña incorrectos.";
+}else{
+    echo "Error: Eres un bot!!!";
 }
 
     unset($_SESSION['cod_veri']);
@@ -101,9 +100,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 }
 
+unset($_SESSION['cod_veri']);
+unset($_SESSION['texto_cal']);
+unset($_SESSION['calculo']);
 if (!isset($_SESSION['cod_veri'])) {
     $_SESSION['cod_veri'] = generarCodAleatorio();
 }
+
 if (!isset($_SESSION['calculo'])){
 $codMate=generarCodMate();
 $_SESSION['calculo']=$codMate['calculo'];
