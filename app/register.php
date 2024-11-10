@@ -1,5 +1,11 @@
 <?php
 session_start();
+
+//Genera un token CSRF y lo almacena en la sesion si no existe
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 function generarCodAleatorio($longitud=6)
 {
     $caracteres='ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
@@ -41,6 +47,11 @@ function generarCodMate($longitud=3)
    
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') { 
+        //Verifica el token CSRF antes de procesar el inicio de sesion
+        if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+            die("Error: Token CSRF invalido.");
+        }
+
     include "config.php";
     include "validar.php";
    echo' <html>
@@ -215,6 +226,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <!--Formulario que indica los datos que debe de introducir el usuario-->
         <form name="register_form" id="register_form" action="register.php" method="POST">
+                <!-- Campo CSRF oculto -->
+                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+
             <label for="name">Nombre y apellidos:</label><br>
             <input type="text" id="nombre" name="nombre" placeholder="Solo se acepta texto"><br>
             <label for="name">DNI:</label><br>
