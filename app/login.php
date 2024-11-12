@@ -131,6 +131,23 @@ $_SESSION['texto_cal']=$codMate['texto_cal'];
             document.getElementById("boton_verificacion").style.display = "none";  // Oculta el botón
         }
     </script>
+    <script>
+        document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        });
+
+        document.addEventListener('copy', function(e) {
+        e.preventDefault();
+        });
+
+        document.addEventListener('cut', function(e) {
+        e.preventDefault();
+        });
+
+        document.addEventListener('paste', function(e) {
+        e.preventDefault();
+        });
+  </script>
 </head>
 <body class="login-page">
 

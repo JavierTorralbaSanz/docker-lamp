@@ -54,6 +54,23 @@ function validar_passwords(string $c1, string $c2) {
     // Requisitos mínimos en la contraseña
     return true;
 }
+function verificar_password($password) {
+    // Definimos los criterios
+    $criterios = [
+        'longitud' => strlen($password) >= 6,
+        'mayuscula' => preg_match('/[A-Z]/', $password),
+        'minuscula' => preg_match('/[a-z]/', $password),
+        'numero' => preg_match('/[0-9]/', $password),
+        'especial' => preg_match('/[!@#$%^&*(),.?":{}|<>]/', $password)
+    ];
+
+    // Comprobamos si cumple todos los criterios
+    $cumpleTodos = array_reduce($criterios, function($carry, $criterio) {
+        return $carry && $criterio;
+    }, true);
+
+    return $cumpleTodos;
+}
 
 function validar_username(string $username) {
     return strlen($username) > 0;

@@ -77,6 +77,27 @@ function validar_passwords(c1, c2) {
     }
     return true;
 }
+function verificar_password(c1) {
+    // Definimos los criterios
+    const criterios = {
+        longitud: c1.length >= 6,
+        mayuscula: /[A-Z]/.test(c1),
+        minuscula: /[a-z]/.test(c1),
+        numero: /[0-9]/.test(c1),
+        especial: /[!@#$%^&*(),.?":{}|<>]/.test(c1)
+    };
+
+    // Comprobamos si cumple todos los criterios
+    const cumpleTodos = Object.values(criterios).every(Boolean);
+
+    // Si la contraseña es segura, devolvemos un mensaje positivo
+    if (cumpleTodos) {
+        return true;
+    }
+
+    return  false;
+}
+
 
 function validar_username(username) {
     //Se comprueba si no se ha introducido ningun username

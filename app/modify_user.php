@@ -80,6 +80,10 @@
                             alert('Contraseña inválida. Las contraseñas deben coincidir y no ser nulas');
                             return;
                         }
+                        if (!verificar_password(c1)){
+                            alert('Contraseña inválida. Debe de tener algunas caracteristicas');
+                            return;
+                        }
                     }
 
                     // todo ok
@@ -100,9 +104,18 @@
                 <input type='text' id='email' name='email' value='" . htmlspecialchars($row['email']) . "' placeholder='Formato: nombre@dominio'><br>
                 <label id='c1'>Contraseña (vacía si no quiere cambiarla):</label><br>
                 <input type='password' id='password1' name='password1'><br>
+                 <div id='requisitos_contrasena'>
+            <ul>
+                <li>Al menos 6 caracteres</li>
+                <li>Al menos una letra mayúscula</li>
+                <li>Al menos una letra minúscula</li>
+                <li>Al menos un número</li>
+                <li>Al menos un carácter especial (!@#$%^&*(),.?:{}|<>)</li>
+            </ul>
+        </div>
                 <label id='c2'>Repetir contraseña:</label><br>
                 <input type='password' id='password2' name='password2'><br>
-                <input type='button' value='Submit' id='user_modify_submit' onclick='validar_datos()'>
+                <input type='submit' value='Submit' id='user_modify_submit''>
             </form>
             </body>";
         }

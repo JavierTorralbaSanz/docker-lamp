@@ -47,7 +47,12 @@ h1 {
 
 
 /* Diseño para la página de inicio de sesión */
-
+.login-page {
+    -webkit-user-select: none; /* Chrome, Safari y Opera */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE 10+ */
+    user-select: none; /* Estándar */
+}
 
 .login-page form {
     background-color: #fff;
@@ -87,6 +92,12 @@ h1 {
 
 /* Diseño para la página de registro de usuario */
 
+.register-page {
+    -webkit-user-select: none; /* Chrome, Safari y Opera */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE 10+ */
+    user-select: none; /* Estándar */
+}
 
 .register-page form {
     background-color: #fff;

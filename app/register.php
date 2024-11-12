@@ -122,7 +122,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "</div>";
             return;
         }
-
+        if (!verificar_password($c1)) {
+            echo "<div class='message-container'>";
+            echo "Las contraseñas son inválidas<br>";
+            echo "<a href='/register'>Volver al formulario</button>";
+            echo "</div>";
+            return;
+        }
+    
         $consulta = $conn->prepare("SELECT * FROM usuarios WHERE dni=?");
         $consulta->bind_param("s", $dni);
         $consulta->execute();
@@ -229,6 +236,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="text" id="username" name="username"><br>
             <label id="c1">Contraseña:</label><br>
             <input type="password" id="password1" name="password1"><br>
+            <small>La contraseña debe cumplir con los siguientes requisitos:</small>
+        
+        <!-- Requisitos de la contraseña -->
+        <div id="requisitos_contrasena">
+            <ul>
+                <li>Al menos 6 caracteres</li>
+                <li>Al menos una letra mayúscula</li>
+                <li>Al menos una letra minúscula</li>
+                <li>Al menos un número</li>
+                <li>Al menos un carácter especial (!@#$%^&*(),.?":{}|<>)</li>
+            </ul>
+        </div>
             <label id="c2">Repetir contraseña:</label><br>
             <input type="password" id="password2" name="password2"><br>
             <!-- Botón para mostrar los campos de verificación -->
