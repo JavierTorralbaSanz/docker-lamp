@@ -2,6 +2,11 @@
 
 session_start();
 
+//Genera un token CSRF y lo almacena en la sesion si no existe
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
     function generarCodAleatorio($longitud=6)
     {
         $caracteres='ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
@@ -41,6 +46,11 @@ session_start();
     }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    //Verifica el token CSRF antes de procesar el inicio de sesion
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        die("Error: Token CSRF invalido.");
+    }
+
     //Obtener datos del usuario
     $nombreUsuario = $_POST['nombre'];
     $contraseña = $_POST['contraseña'];
@@ -154,6 +164,9 @@ $_SESSION['texto_cal']=$codMate['texto_cal'];
     <h1>Iniciar Sesión</h1>
 
     <form name="login_form" id="login_form" action="login.php" method="POST">
+            <!-- Campo CSRF oculto -->
+            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+            
         <!-- Formulario de inicio de sesión -->
         <label for="nombre">Nombre de usuario:</label>
         <input type="text" id="nombre" name="nombre" required><br>
