@@ -1,5 +1,9 @@
 <?php
-session_start();
+session_start([
+    'cookie_samesite' => 'Strict', //se puede poner Lax segun lo que necesitemos
+    'cookie_secure' => true,        //Asegura que la cookie solo se envie por HTTPS
+    'cookie_httponly' => true       //Evita que la cookie sea accesible desde JavaScript
+]);
 
 //Genera un token CSRF y lo almacena en la sesion si no existe
 if (!isset($_SESSION['csrf_token'])) {
