@@ -41,6 +41,7 @@
                 echo "<head>
                     <link rel='stylesheet' type='text/css' href='estilos.css'> <!--Parte visual en estilos.css-->
                     <script src='inactividad.js'></script>
+                    <script src='validacion.js'></script> <!-- Enlace a tu archivo de validaciones -->
                 </head>";
 
                 echo "<body class='register-page'>
@@ -133,10 +134,68 @@
         $c1 = $_POST['password1'];
         $c2 = $_POST['password2'];
 
+        include "validar.php";
         // Generar hash seguro de la contraseña, en PHP la funcion 
         // password_hash genera automaticamente un salt y realiza el hash
         $hashed_password = password_hash($c1, PASSWORD_DEFAULT);
-
+        if (!validar_dni($dni)) {
+            echo "<div class='message-container'>";
+            echo "El DNI es inválido<br>";
+            echo "<a href='/modify_user?user=" . urlencode($usuario) . "'>Volver a modificar</button>";
+            echo "</div>";
+            return;
+        }
+        if (!validar_nombre($nombre)) {
+            echo "<div class='message-container'>";
+            echo "El nombre es inválido<br>";
+            echo "<a href='/modify_user?user=" . urlencode($usuario) . "'>Volver a modificar</button>";
+            echo "</div>";
+            return;
+        }
+        if (!validar_telefono($telefono)) {
+            echo "<div class='message-container'>";
+            echo "El teléfono es inválido<br>";
+            echo "<a href='/modify_user?user=" . urlencode($usuario) . "'>Volver a modificar</button>";
+            echo "</div>";
+            return;
+        }
+        if (!validar_fecha($fecha)) {
+            echo "<div class='message-container'>";
+            echo "La fecha de nacimiento es inválida<br>";
+            echo "<a href='/modify_user?user=" . urlencode($usuario) . "'>Volver a modificar</button>";
+            echo "</div>";
+            return;
+        }
+        if (!validar_email($email)) {
+            echo "<div class='message-container'>";
+            echo "El email es inválido<br>";
+            echo "<a href='/modify_user?user=" . urlencode($usuario) . "'>Volver a modificar</button>";
+            echo "</div>";
+            return;
+        }
+        if (!validar_username($usuario)) {
+            echo "<div class='message-container'>";
+            echo "El nombre de usuario no puede estar vacío<br>";
+            echo "<a href='/modify_user?user=" . urlencode($usuario) . "'>Volver a modificar</button>";
+            echo "</div>";
+            return;
+        }
+        if (strlen($c1)!=0 || strlen($c2)!=0){
+                if (!validar_passwords($c1, $c2)) {
+                    echo "<div class='message-container'>";
+                    echo "Las contraseñas no coinciden<br>";
+                    echo "<a href='/modify_user?user=" . urlencode($usuario) . "'>Volver a modificar</button>";
+                    echo "</div>";
+                    return;
+                }
+                if (!verificar_password($c1)) {
+                    echo "<div class='message-container'>";
+                    echo "Las contraseñas son inválidas<br>";
+                    echo "<a href='/modify_user?user=" . urlencode($usuario) . "'>Volver a modificar</button>";
+                    echo "</div>";
+                    return;
+                }
+        } 
         // query
         $hostname = "db";
         $username = "admin";
