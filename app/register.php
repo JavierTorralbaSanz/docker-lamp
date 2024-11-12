@@ -139,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         if (!verificar_password($c1)) {
             echo "<div class='message-container'>";
-            echo "Las contraseñas son inválidas<br>";
+            echo "La contraseña no cumple con los requisitos<br>";
             echo "<a href='/register'>Volver al formulario</button>";
             echo "</div>";
             return;
