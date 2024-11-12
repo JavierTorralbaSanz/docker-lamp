@@ -1,19 +1,36 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información del Usuario</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
 <?php
 
+    include "config.php";
+    include 'caducidad_sesion.php';
     parse_str($_SERVER['QUERY_STRING'], $params);
 
     if (!$params) {
-        echo 'No se ha especificado un DNI<br>';
+        echo 'No se ha especificado un usuario<br>';
+        echo '<a href="/">Página inicial</a>';
+        return;
+    }
+
+    if (!isset($_SESSION['usuario']) || $_SESSION['usuario'] != $params['user']) {
+        echo "Debes iniciar sesión para ver tus datos<br>";
         echo '<a href="/">Página inicial</a>';
         return;
     }
 
     $usuario = $params['user'];
 
-    $hostname = "db";
-    $username = "admin";
-    $password = "test";
-    $db = "database";
+    $stmt = $conn->prepare("SELECT * FROM usuarios WHERE username = ?");
+    $stmt->bind_param("s", $usuario);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
 
     $conn = mysqli_connect($hostname,$username,$password,$db);
     if ($conn->connect_error) {
@@ -53,3 +70,5 @@
         echo '<a href="/">Página inicial</a>';
     }
 ?>
+
+</body>
