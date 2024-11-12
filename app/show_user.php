@@ -29,16 +29,6 @@
     $stmt = $conn->prepare("SELECT * FROM usuarios WHERE username = ?");
     $stmt->bind_param("s", $usuario);
     $stmt->execute();
-    $resultado = $stmt->get_result();
-
-    $conn = mysqli_connect($hostname,$username,$password,$db);
-    if ($conn->connect_error) {
-        die("Database connection failed: " . $conn->connect_error);
-    }
-
-    $stmt = $conn->prepare("SELECT * FROM usuarios WHERE username = ?");
-    $stmt->bind_param("s", $usuario);
-    $stmt->execute();
     $result = $stmt->get_result();
     
     if ($row = $result->fetch_assoc()) {
