@@ -1,10 +1,9 @@
 <?php
+ini_set("session.cookie_samesite", 1);
+ini_set("session.cookie_secure", 1);
+ini_set("session.cookie_httponly", 1);
+session_start();
 
-session_start([
-    'cookie_samesite' => 'Strict', //se puede poner Lax segun lo que necesitemos
-    'cookie_secure' => true,        //Asegura que la cookie solo se envie por HTTPS
-    'cookie_httponly' => true       //Evita que la cookie sea accesible desde JavaScript
-]);
     //Este archivo se encargará de gestionar el redireccionamiento a otras partes de la página
     switch (explode("?", $_SERVER['REQUEST_URI'])[0]) {
         case '/':
@@ -68,7 +67,7 @@ session_start([
             break;
         
         case '/logout':
-            unset($_SESSION['usuario']);
+            session_destroy();
             header('Location: /');
             break;
 

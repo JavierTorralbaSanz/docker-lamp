@@ -1,9 +1,4 @@
 <?php
-session_start([
-    'cookie_samesite' => 'Strict', //se puede poner Lax segun lo que necesitemos
-    'cookie_secure' => true,        //Asegura que la cookie solo se envie por HTTPS
-    'cookie_httponly' => true       //Evita que la cookie sea accesible desde JavaScript
-]);
 
 //Genera un token CSRF y lo almacena en la sesion si no existe
 if (!isset($_SESSION['csrf_token'])) {
@@ -50,7 +45,8 @@ function generarCodMate($longitud=3)
 
    
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') { 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    session_start();
         //Verifica el token CSRF antes de procesar el inicio de sesion
         if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
             die("Error: Token CSRF invalido.");

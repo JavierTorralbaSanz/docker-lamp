@@ -1,57 +1,56 @@
 <?php
 
-session_start([
-    'cookie_samesite' => 'Strict', //se puede poner Lax segun lo que necesitemos
-    'cookie_secure' => true,        //Asegura que la cookie solo se envie por HTTPS
-    'cookie_httponly' => true       //Evita que la cookie sea accesible desde JavaScript
-]);
+include "config.php";
 
 //Genera un token CSRF y lo almacena en la sesion si no existe
 if (!isset($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
-    function generarCodAleatorio($longitud=6)
+function generarCodAleatorio($longitud=6)
+{
+    $caracteres='ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+    $texto='';
+    for ($i=0; $i < $longitud;$i++)
     {
-        $caracteres='ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-        $texto='';
-        for ($i=0; $i < $longitud;$i++)
-        {
-            $texto .=$caracteres[rand(0,strlen($caracteres)-1)];
-        }
-        return $texto;
+        $texto .=$caracteres[rand(0,strlen($caracteres)-1)];
     }
-    function generarCodMate($longitud=3)
+    return $texto;
+}
+function generarCodMate($longitud=3)
+{
+    $funciones='+-*';
+    $numeros="0123456789";
+    $texto='';
+    for ($i=0; $i < $longitud;$i++)
     {
-        $funciones='+-*';
-        $numeros="0123456789";
-        $texto='';
-        for ($i=0; $i < $longitud;$i++)
-        {
-            if ($i==1){
-                $texto .=$funciones[rand(0,strlen($funciones)-1)];
-            }
-            else{
-                $texto .=$numeros[rand(0,strlen($numeros)-1)];
-            }
+        if ($i==1){
+            $texto .=$funciones[rand(0,strlen($funciones)-1)];
         }
-        $calculo=0;
-        if ($texto[1] == "+") {
-            $calculo = (int)$texto[0] + (int)$texto[2];
-        } elseif ($texto[1] == "-") {
-            $calculo = (int)$texto[0] - (int)$texto[2]; 
-        } else {
-            $calculo = (int)$texto[0] * (int)$texto[2];
+        else{
+            $texto .=$numeros[rand(0,strlen($numeros)-1)];
         }
-        
-        return [
-            'calculo'=>$calculo,
-            'texto_cal'=>$texto];
     }
+    $calculo=0;
+    if ($texto[1] == "+") {
+        $calculo = (int)$texto[0] + (int)$texto[2];
+    } elseif ($texto[1] == "-") {
+        $calculo = (int)$texto[0] - (int)$texto[2]; 
+    } else {
+        $calculo = (int)$texto[0] * (int)$texto[2];
+    }
+    
+    return [
+        'calculo'=>$calculo,
+        'texto_cal'=>$texto];
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    session_start();
     //Verifica el token CSRF antes de procesar el inicio de sesion
     if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        error_log("Token CSRF invalido. Se esperaba " . $_SESSION['csrf_token'] . ", se obtuvo "
+        . $_POST['csrf_token']);
         die("Error: Token CSRF invalido.");
     }
 
@@ -63,55 +62,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $calculoIngresado= $_POST['cal_ingresado'];
     $calGuardado = $_SESSION['calculo'];
     //Proceso para conectarese a la base de datos
-    $hostname = "db";
-    $username = "admin";
-    $password = "test";
-    $db = "database";
+    
 
-    $conn = mysqli_connect($hostname,$username,$password,$db);
-    if ($conn->connect_error) {
-        die("Database connection failed: " . $conn->connect_error);
+    //Preparar la consulta para obtener el hash de la contraseña
+    $sql = "SELECT contraseña FROM usuarios WHERE username = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $nombreUsuario);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+
+    if ($resultado->num_rows > 0 && $codigoGuardado == $codigoIngresado && $calculoIngresado == (string)$calGuardado) {
+        $row = $resultado->fetch_assoc();
+        
+        //Usar password_verify para comparar la contraseña ingresada con el hash
+        if (password_verify($contraseña, $row['contraseña'])) {
+            $_SESSION['usuario'] = $nombreUsuario;
+            echo '<head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Inicio de Sesión</title>
+                <link rel="stylesheet" href="estilos.css">
+                </head>
+                <body>
+                <div class="message-container">
+                    <h1>Inicio de sesión exitoso. Bienvenido ' . htmlspecialchars($nombreUsuario) . '</h1>
+                    <a href="/" class="link-button">Ir a la Página Principal</a>
+                </div>
+                </body>';
+            exit; 
+        } elseif($resultado->num_rows <=0 ){
+            echo "Error: Nombre de usuario o contraseña incorrectos.";
+        }else{
+            echo "Error: Eres un bot!!!";
+        }
+
+        unset($_SESSION['cod_veri']);
+        unset($_SESSION['texto_cal']);
+        unset($_SESSION['calculo']);
+        $stmt->close();
+        $conn->close();
     }
-
- //Preparar la consulta para obtener el hash de la contraseña
- $sql = "SELECT contraseña FROM usuarios WHERE username = ?";
- $stmt = $conn->prepare($sql);
- $stmt->bind_param("s", $nombreUsuario);
- $stmt->execute();
- $resultado = $stmt->get_result();
-
- if ($resultado->num_rows > 0 && $codigoGuardado == $codigoIngresado && $calculoIngresado == (string)$calGuardado) {
-     $row = $resultado->fetch_assoc();
-     
-     //Usar password_verify para comparar la contraseña ingresada con el hash
-     if (password_verify($contraseña, $row['contraseña'])) {
-         $_SESSION['usuario'] = $nombreUsuario;
-         echo '<head>
-             <meta charset="UTF-8">
-             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-             <title>Inicio de Sesión</title>
-             <link rel="stylesheet" href="estilos.css">
-             </head>
-             <body>
-             <div class="message-container">
-                 <h1>Inicio de sesión exitoso. Bienvenido ' . htmlspecialchars($nombreUsuario) . '</h1>
-                 <a href="/" class="link-button">Ir a la Página Principal</a>
-             </div>
-             </body>';
-
-    exit; 
-} elseif($resultado->num_rows <=0 ){
-    echo "Error: Nombre de usuario o contraseña incorrectos.";
-}else{
-    echo "Error: Eres un bot!!!";
-}
-
-    unset($_SESSION['cod_veri']);
-    unset($_SESSION['texto_cal']);
-    unset($_SESSION['calculo']);
-    $stmt->close();
-    $conn->close();
-}
 }
 
 unset($_SESSION['cod_veri']);
@@ -122,11 +112,10 @@ if (!isset($_SESSION['cod_veri'])) {
 }
 
 if (!isset($_SESSION['calculo'])){
-$codMate=generarCodMate();
-$_SESSION['calculo']=$codMate['calculo'];
-$_SESSION['texto_cal']=$codMate['texto_cal'];
+    $codMate=generarCodMate();
+    $_SESSION['calculo']=$codMate['calculo'];
+    $_SESSION['texto_cal']=$codMate['texto_cal'];
 }
-
 
 ?>
 
@@ -168,8 +157,8 @@ $_SESSION['texto_cal']=$codMate['texto_cal'];
     <h1>Iniciar Sesión</h1>
 
     <form name="login_form" id="login_form" action="login.php" method="POST">
-            <!-- Campo CSRF oculto -->
-            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+        <!-- Campo CSRF oculto -->
+        <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
             
         <!-- Formulario de inicio de sesión -->
         <label for="nombre">Nombre de usuario:</label>
