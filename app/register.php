@@ -1,5 +1,32 @@
 <?php
 
+//Funcion que registra los logs en un .txt y BD
+function access_log($conn, $message) {
+    $logFile = '/var/www/html/access.txt';
+    $currentDateTime = date('Y-m-d H:i:s');
+    $ipAddress = $_SERVER['REMOTE_ADDR'];
+    $userAgent = $_SERVER['HTTP_USER_AGENT'];
+    $requestUri = $_SERVER['REQUEST_URI'];
+
+
+        //Constructor de mensaje que se escribira en el access.txt y BD
+        $logMessage = "[$currentDateTime] $ipAddress \"$requestUri\" \"$userAgent\" - $message" . PHP_EOL;
+    
+
+        file_put_contents($logFile, $logMessage, FILE_APPEND);
+    
+    $consulta = $conn->prepare("
+        INSERT INTO accessLog (ipAddress, currentDateTime, userAgent, requestUri)
+        VALUES (?, ?, ?, ?)
+    ");
+    $consulta->bind_param("ssss", $ipAddress, $currentDateTime, $userAgent, $requestUri);
+    $consulta->execute();
+    $consulta->close();
+}
+
+
+
+
 //Genera un token CSRF y lo almacena en la sesion si no existe
 if (!isset($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
@@ -190,6 +217,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "<a href='/' class='link-button'>Página inicial</a>";
             echo "</div>";
         }
+        access_log($conn,"Acceso a la página principal");
         echo'</body>
             </html>';
             unset($_SESSION['cod_veri']);
