@@ -12,3 +12,6 @@ RUN echo "expose_php = Off" >> /usr/local/etc/php/php.ini
 RUN echo "session.cookie_samesite = 'Strict'" >> /usr/local/etc/php/php.ini
 RUN echo "session.cookie_secure = 1" >> /usr/local/etc/php/php.ini
 RUN echo "session.cookie_httponly = 1" >> /usr/local/etc/php/php.ini
+
+# Permite modificar los headers desde .htaccess
+RUN a2enmod headers
