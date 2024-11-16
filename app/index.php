@@ -1,7 +1,4 @@
 <?php
-ini_set("session.cookie_samesite", 1);
-ini_set("session.cookie_secure", 1);
-ini_set("session.cookie_httponly", 1);
 session_start();
 
     //Este archivo se encargará de gestionar el redireccionamiento a otras partes de la página

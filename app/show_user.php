@@ -55,7 +55,7 @@
         </body>';
     }
     else {
-        echo 'No existe ningún usuario con DNI \'' .  htmlspecialchars($usuario) . '\'<br>';
+        echo 'No existe ningún usuario con nombre de usuario \'' .  htmlspecialchars($usuario) . '\'<br>';
         echo '<a href="/">Página inicial</a>';
     }
 ?>
