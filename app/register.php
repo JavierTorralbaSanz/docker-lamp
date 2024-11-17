@@ -10,16 +10,16 @@ function access_log($conn, $message) {
 
 
         //Constructor de mensaje que se escribira en el access.txt y BD
-        $logMessage = "[$currentDateTime] $ipAddress \"$requestUri\" \"$userAgent\" - $message" . PHP_EOL;
+        $logMessage = "[$currentDateTime] $ipAddress  - $message - \"$requestUri\" \"$userAgent\"" . PHP_EOL;
     
 
         file_put_contents($logFile, $logMessage, FILE_APPEND);
     
     $consulta = $conn->prepare("
-        INSERT INTO accessLog (ipAddress, currentDateTime, userAgent, requestUri)
-        VALUES (?, ?, ?, ?)
+        INSERT INTO accessLog (ipAddress, currentDateTime, mensaje, userAgent, requestUri)
+        VALUES (?, ?, ?, ?, ?)
     ");
-    $consulta->bind_param("ssss", $ipAddress, $currentDateTime, $userAgent, $requestUri);
+    $consulta->bind_param("sssss", $ipAddress, $currentDateTime, $message, $userAgent, $requestUri);
     $consulta->execute();
     $consulta->close();
 }
@@ -112,6 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $hashed_password = password_hash($c1, PASSWORD_DEFAULT);
 
         if (!validar_dni($dni)) {
+            access_log($conn,"DNI invalido");
             echo "<div class='message-container'>";
             echo "El DNI es inválido<br>";
             echo "<a href='/register'>Volver al formulario</button>";
@@ -119,6 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             return;
         }
         if (!validar_nombre($nombre)) {
+            access_log($conn,"Nombre invalido");
             echo "<div class='message-container'>";
             echo "El nombre es inválido<br>";
             echo "<a href='/register'>Volver al formulario</button>";
@@ -126,6 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             return;
         }
         if (!validar_telefono($telefono)) {
+            access_log($conn,"Telefono invalido");
             echo "<div class='message-container'>";
             echo "El teléfono es inválido<br>";
             echo "<a href='/register'>Volver al formulario</button>";
@@ -133,6 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             return;
         }
         if (!validar_fecha($fecha)) {
+            access_log($conn,"Fecha nacimiento invalida");
             echo "<div class='message-container'>";
             echo "La fecha de nacimiento es inválida<br>";
             echo "<a href='/register'>Volver al formulario</button>";
@@ -140,13 +144,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             return;
         }
         if (!validar_email($email)) {
+            access_log($conn,"Email invalido");
             echo "<div class='message-container'>";
             echo "El email es inválido<br>";
             echo "<a href='/register'>Volver al formulario</button>";
             echo "</div>";
             return;
         }
-        if (!validar_username($username)) {
+        if (!validar_username($username)){
+            access_log($conn,"Nombre de usuario vacio");
             echo "<div class='message-container'>";
             echo "El nombre de usuario no puede estar vacío<br>";
             echo "<a href='/register'>Volver al formulario</button>";
@@ -154,6 +160,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             return;
         }
         if (!validar_passwords($c1, $c2)) {
+            access_log($conn,"Las contraseñas no coinciden o son invalidas");
             echo "<div class='message-container'>";
             echo "Las contraseñas no coinciden o son inválidas<br>";
             echo "<a href='/register'>Volver al formulario</button>";
@@ -161,6 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             return;
         }
         if (!verificar_password($c1)) {
+            access_log($conn,"La contraseña no cumple con los requisitos");
             echo "<div class='message-container'>";
             echo "La contraseña no cumple con los requisitos<br>";
             echo "<a href='/register'>Volver al formulario</button>";
@@ -175,6 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $consulta->close();
 
         if ($resultado->num_rows != 0) {
+            access_log($conn,"DNI repetido");
             echo "<div class='message-container'>";
             echo "Ya existe un usuario con DNI $dni<br>";
             echo "<a href='/' class='link-button'>Página inicial</a>";
@@ -189,6 +198,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $consulta->close();
 
         if ($resultado->num_rows != 0) {
+            access_log($conn,"Usuario ya en uso");
             echo "<div class='message-container'>";
             echo "El nombre de usuario ya está en uso<br>";
             echo "<a href='/' class='link-button'>Página inicial</a>";
@@ -205,19 +215,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         //Registra al usuario
         if ($consulta->execute()) {
+            access_log($conn,"Usuario registrado");
             echo "<div class='message-container'>";
             echo "<h1>Usuario registrado</h1>";
             echo "<a href='/' class='link-button'>Página inicial</a>";
             echo "</div>";
         }
         else {
+            access_log($conn,"Registro erroneo");
             error_log("No se pudo registrar al usuario: " . mysqli_error($conn));
             echo "<div class='message-container'>";
             echo "Se ha producido un error. No se ha completado el registro<br>";
             echo "<a href='/' class='link-button'>Página inicial</a>";
             echo "</div>";
         }
-        access_log($conn,"Acceso a la página principal");
         echo'</body>
             </html>';
             unset($_SESSION['cod_veri']);
