@@ -2,6 +2,32 @@
 
 include "config.php";
 
+
+//Funcion que registra los logs en un .txt y BD
+function access_log($conn, $message) {
+    $logFile = '/var/www/html/access.txt';
+    $currentDateTime = date('Y-m-d H:i:s');
+    $ipAddress = $_SERVER['REMOTE_ADDR'];
+    $userAgent = $_SERVER['HTTP_USER_AGENT'];
+    $requestUri = $_SERVER['REQUEST_URI'];
+
+
+        //Constructor de mensaje que se escribira en el access.txt y BD
+        $logMessage = "[$currentDateTime] $ipAddress  - $message - \"$requestUri\" \"$userAgent\"" . PHP_EOL;
+    
+
+        file_put_contents($logFile, $logMessage, FILE_APPEND);
+    
+    $consulta = $conn->prepare("
+        INSERT INTO accessLog (ipAddress, currentDateTime, mensaje, userAgent, requestUri)
+        VALUES (?, ?, ?, ?, ?)
+    ");
+    $consulta->bind_param("sssss", $ipAddress, $currentDateTime, $message, $userAgent, $requestUri);
+    $consulta->execute();
+    $consulta->close();
+}
+
+
 //Genera un token CSRF y lo almacena en la sesion si no existe
 if (!isset($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
@@ -77,6 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         //Usar password_verify para comparar la contraseña ingresada con el hash
         if (password_verify($contraseña, $row['contraseña'])) {
             $_SESSION['usuario'] = $nombreUsuario;
+            access_log($conn, "Inicio de sesion correcto");
             echo '<head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -90,17 +117,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 </body>';
             exit; 
-        } elseif($resultado->num_rows <=0 ){
+        } else{
+            access_log($conn, "Nombre de usuario o contraseña incorrectos");
             echo "Error: Nombre de usuario o contraseña incorrectos.";
-        }else{
-            echo "Error: Eres un bot!!!";
+        
         }
+    
 
         unset($_SESSION['cod_veri']);
         unset($_SESSION['texto_cal']);
         unset($_SESSION['calculo']);
         $stmt->close();
         $conn->close();
+    }
+    else{
+        access_log($conn, "Posible bot");
+        echo "Error: Eres un bot!!!";
     }
 }
 
