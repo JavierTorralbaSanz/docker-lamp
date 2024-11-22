@@ -1,27 +1,24 @@
 services:
   web:
-   build: .
-   environment:
-     - ALLOW_OVERRIDE=true
-   env_file:
-     - .env
-   ports:
-     - "81:80"
-   links:
-     - db
-   volumes:
-     - ./app:/var/www/html/
+    build: .
+    environment:
+      - ALLOW_OVERRIDE=true
+    env_file:
+      - .env
+    ports:
+      - "81:80"
+    links:
+      - db
+    volumes:
+      - ./app:/var/www/html/
 
   db:
     image: mariadb:10.8.2
     restart: always
     volumes:
       - ./mysql:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: test
-      MYSQL_DATABASE: database
+    env_file:
+      - .env
     ports:
       - "8889:3306"
 
@@ -31,7 +28,5 @@ services:
       - db
     ports:
       - 8890:80
-    environment:
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: test
-      MYSQL_DATABASE: database
+    env_file:
+      - .env
