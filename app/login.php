@@ -3,7 +3,8 @@
 include "config.php";
 
 
-//Funcion que registra los logs en un .txt 
+//Funcion que registra los logs en un .txt
+function access_log($conn, $message) {
     $logFile = '/var/www/html/access.txt';
     $currentDateTime = date('Y-m-d H:i:s');
     $ipAddress = $_SERVER['REMOTE_ADDR'];
