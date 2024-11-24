@@ -3,8 +3,7 @@
 include "config.php";
 
 
-//Funcion que registra los logs en un .txt y BD
-function access_log($conn, $message) {
+//Funcion que registra los logs en un .txt 
     $logFile = '/var/www/html/access.txt';
     $currentDateTime = date('Y-m-d H:i:s');
     $ipAddress = $_SERVER['REMOTE_ADDR'];
@@ -12,19 +11,13 @@ function access_log($conn, $message) {
     $requestUri = $_SERVER['REQUEST_URI'];
 
 
-        //Constructor de mensaje que se escribira en el access.txt y BD
+        //Constructor de mensaje que se escribira en el access.txt 
         $logMessage = "[$currentDateTime] $ipAddress  - $message - \"$requestUri\" \"$userAgent\"" . PHP_EOL;
     
 
         file_put_contents($logFile, $logMessage, FILE_APPEND);
     
-    $consulta = $conn->prepare("
-        INSERT INTO accessLog (ipAddress, currentDateTime, mensaje, userAgent, requestUri)
-        VALUES (?, ?, ?, ?, ?)
-    ");
-    $consulta->bind_param("sssss", $ipAddress, $currentDateTime, $message, $userAgent, $requestUri);
-    $consulta->execute();
-    $consulta->close();
+        
 }
 
 

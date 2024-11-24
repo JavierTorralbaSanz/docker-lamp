@@ -1,6 +1,6 @@
 <?php
 
-//Funcion que registra los logs en un .txt y BD
+//Funcion que registra los logs en un .txt 
 function access_log($conn, $message) {
     $logFile = '/var/www/html/access.txt';
     $currentDateTime = date('Y-m-d H:i:s');
@@ -9,21 +9,13 @@ function access_log($conn, $message) {
     $requestUri = $_SERVER['REQUEST_URI'];
 
 
-        //Constructor de mensaje que se escribira en el access.txt y BD
+        //Constructor de mensaje que se escribira en el access.txt 
         $logMessage = "[$currentDateTime] $ipAddress  - $message - \"$requestUri\" \"$userAgent\"" . PHP_EOL;
     
 
         file_put_contents($logFile, $logMessage, FILE_APPEND);
     
-    $consulta = $conn->prepare("
-        INSERT INTO accessLog (ipAddress, currentDateTime, mensaje, userAgent, requestUri)
-        VALUES (?, ?, ?, ?, ?)
-    ");
-    $consulta->bind_param("sssss", $ipAddress, $currentDateTime, $message, $userAgent, $requestUri);
-    $consulta->execute();
-    $consulta->close();
 }
-
 
 
 
@@ -74,11 +66,12 @@ function generarCodMate($longitud=3)
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     session_start();
+    
         //Verifica el token CSRF antes de procesar el inicio de sesion
         if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
             die("Error: Token CSRF invalido.");
         }
-
+    
     include "config.php";
     include "validar.php";
    echo' <html>

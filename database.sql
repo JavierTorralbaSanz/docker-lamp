@@ -50,16 +50,6 @@ CREATE TABLE `videojuegos`(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
-CREATE TABLE `accessLog`(
-  `id` INT AUTO_INCREMENT NOT NULL,
-  `ipAddress` VARCHAR(15),
-  `currentDateTime` DATETIME, 
-  `mensaje` VARCHAR(255),
-  `userAgent` VARCHAR(255),
-  `requestUri` VARCHAR(255),
-
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `usuarios`
